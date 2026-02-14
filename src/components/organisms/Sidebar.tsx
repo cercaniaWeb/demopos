@@ -27,7 +27,7 @@ const Sidebar: React.FC<SidebarProps> = ({
   isOpen,
   onClose,
   logo,
-  title = 'Racom-POS'
+  title = 'AURA'
 }) => {
   return (
     <>
@@ -40,7 +40,7 @@ const Sidebar: React.FC<SidebarProps> = ({
       )}
 
       <aside
-        className={`fixed inset-y-0 left-0 z-50 w-64 bg-card border-r border-border transform ${isOpen ? 'translate-x-0' : '-translate-x-full'
+        className={`fixed inset-y-0 left-0 z-50 w-64 bg-background border-r border-border transform ${isOpen ? 'translate-x-0' : '-translate-x-full'
           } md:translate-x-0 transition-transform duration-300 ease-in-out flex flex-col`}
       >
         <div className="p-4 border-b border-border flex items-center justify-between">
@@ -53,7 +53,7 @@ const Sidebar: React.FC<SidebarProps> = ({
               className="h-8 w-auto object-contain"
               priority
             />
-            <Text variant="h5" className="font-bold text-foreground">
+            <Text variant="h5" className="font-bold text-gradient tracking-wider">
               {title}
             </Text>
           </Link>
@@ -75,6 +75,7 @@ const Sidebar: React.FC<SidebarProps> = ({
               {item.href ? (
                 <Link
                   href={item.href}
+                  id={item.id}
                   className={`flex items-center px-3 py-2.5 text-sm font-medium rounded-lg transition-colors ${item.active
                     ? 'bg-primary text-primary-foreground'
                     : 'text-foreground/80 hover:bg-accent hover:text-accent-foreground'
@@ -86,6 +87,7 @@ const Sidebar: React.FC<SidebarProps> = ({
               ) : (
                 <button
                   onClick={item.onClick}
+                  id={item.id}
                   className={`w-full text-left flex items-center px-3 py-2.5 text-sm font-medium rounded-lg transition-colors ${item.active
                     ? 'bg-primary text-primary-foreground'
                     : 'text-foreground/80 hover:bg-accent hover:text-accent-foreground'
@@ -101,7 +103,7 @@ const Sidebar: React.FC<SidebarProps> = ({
 
         <div className="p-4 border-t border-border">
           <Text variant="caption" className="text-muted-foreground">
-            © {new Date().getFullYear()} Racom-POS
+            © {new Date().getFullYear()} AURA • POS Inteligente
           </Text>
         </div>
       </aside>

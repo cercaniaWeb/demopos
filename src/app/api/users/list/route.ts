@@ -23,40 +23,56 @@ export async function GET() {
     try {
         const supabase = getAdminClient();
 
-        // Fetch profiles with store info in one query
-        const { data: profiles, error: profilesError } = await supabase
-            .from('user_profiles')
-            .select(`
-                *,
-                user_stores (
-                    store_id,
-                    stores (
-                        id,
-                        name
-                    )
-                )
-            `)
+        // 1. Fetch all users
+        const { data: users, error: usersError } = await supabase
+            .from('users')
+            .select('*')
             .order('created_at', { ascending: false });
 
-        if (profilesError) {
-            console.error('Error listing user profiles:', profilesError);
-            return NextResponse.json({ error: profilesError.message }, { status: 500 });
+        if (usersError) {
+            console.error('Error fetching users:', usersError);
+            return NextResponse.json({ error: usersError.message }, { status: 500 });
         }
 
-        // Map to expected User interface with store info
-        const mappedUsers = (profiles || []).map((profile: any) => {
-            // Get the first store assignment if exists
-            const userStore = profile.user_stores?.[0];
-            const store = userStore?.stores;
+        // 2. Fetch user_stores with store details
+        // Note: separate query because public.users might not have explicit FK to user_stores
+        const { data: userStores, error: storesError } = await supabase
+            .from('user_stores')
+            .select(`
+                user_id,
+                store_id,
+                stores (
+                    id,
+                    name
+                )
+            `);
 
+        if (storesError) {
+            console.warn('Error fetching user stores (non-critical):', storesError);
+            // Continue without stores if this fails
+        }
+
+        // 3. Map stores to users
+        const userStoreMap = new Map();
+        if (userStores) {
+            userStores.forEach((us: any) => {
+                if (us.user_id && us.stores) {
+                    userStoreMap.set(us.user_id, us.stores);
+                }
+            });
+        }
+
+        // 4. Transform to response format
+        const mappedUsers = (users || []).map((user: any) => {
+            const store = userStoreMap.get(user.id);
             return {
-                id: profile.id,
-                email: profile.email,
-                name: profile.name,
-                role: profile.role,
-                status: profile.status,
-                created_at: profile.created_at,
-                updated_at: profile.updated_at,
+                id: user.id,
+                email: user.email,
+                name: user.name,
+                role: user.role,
+                status: user.status,
+                created_at: user.created_at,
+                updated_at: user.updated_at,
                 store_id: store?.id || null,
                 store_name: store?.name || null
             };

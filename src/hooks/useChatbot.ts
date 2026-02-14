@@ -12,7 +12,14 @@ export interface ChatMessage {
 }
 
 export function useChatbot() {
-    const [messages, setMessages] = useState<ChatMessage[]>([]);
+    const [messages, setMessages] = useState<ChatMessage[]>([
+        {
+            id: 'initial',
+            role: 'assistant',
+            content: "Estimado usuario, soy Aura, su aliada estratégica y consultora de negocios. Mi objetivo es proporcionarle análisis precisos para optimizar la rentabilidad de su empresa. He preparado un informe preliminar sobre sus productos estrella y tendencias de inventario. ¿En qué área administrativa puedo asistirle en este momento?",
+            timestamp: new Date()
+        }
+    ]);
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState<string | null>(null);
 
@@ -44,17 +51,17 @@ export function useChatbot() {
                 const lowerQuery = query.toLowerCase();
                 if (lowerQuery.includes('vendi') || lowerQuery.includes('venta')) {
                     result = {
-                        text: "Aquí tienes un resumen de tus ventas recientes. Se observa un crecimiento del 15% esta semana.",
+                        text: "Tras realizar el análisis del periodo solicitado, se ha identificado un incremento del 15% en el volumen de transacciones. Su **Producto Estrella**, Coca Cola 600ml, mantiene una participación del 30% en el margen de utilidad bruta. A continuación, presento el desglose detallado de rendimiento por SKU.",
                         data: [
-                            { producto: "Coca Cola 600ml", ventas: 145, total: "$2,175.00" },
-                            { producto: "Sabritas Naturales", ventas: 89, total: "$1,335.00" },
-                            { producto: "Gansito", ventas: 67, total: "$1,005.00" }
+                            { producto: "Coca Cola 600ml", ventas: 145, total: "$2,175.00", tendencia: "Alza" },
+                            { producto: "Sabritas Naturales", ventas: 89, total: "$1,335.00", tendencia: "Estable" },
+                            { producto: "Gansito", ventas: 67, total: "$1,005.00", tendencia: "Estable" }
                         ],
                         sql: "SELECT name, SUM(quantity), SUM(total) FROM sales JOIN products... (SIMULATED)"
                     };
                 } else if (lowerQuery.includes('stock') || lowerQuery.includes('inventario')) {
                     result = {
-                        text: "He analizado tu inventario. Tienes 5 productos con stock crítico que requieren atención inmediata.",
+                        text: "Se ha completado la auditoría de existencias. Se han detectado 5 artículos con niveles por debajo del umbral de seguridad. Se recomienda formalizar el reabastecimiento de sus **Productos Estrella** para garantizar la continuidad operativa ante la demanda proyectada.",
                         data: [
                             { producto: "Leche Entera 1L", stock_actual: 3, stock_minimo: 10 },
                             { producto: "Huevo 12 pz", stock_actual: 2, stock_minimo: 15 },
@@ -64,7 +71,7 @@ export function useChatbot() {
                     };
                 } else {
                     result = {
-                        text: "¡Hola! Soy tu asistente de demo. Puedo ayudarte a analizar tus ventas, inventario y más. Como ésta es una versión de prueba, mis respuestas son simuladas para que veas cómo funciona el sistema sin gastar tokens reales.",
+                        text: "Quedo a su disposición para realizar consultas sobre rendimiento financiero, gestión de activos o análisis de rotación de inventarios. ¿Desea que genere un reporte específico sobre algún segmento de su negocio?",
                         data: [],
                         sql: ""
                     };
@@ -115,7 +122,14 @@ export function useChatbot() {
     };
 
     const clearHistory = () => {
-        setMessages([]);
+        setMessages([
+            {
+                id: 'initial',
+                role: 'assistant',
+                content: "Estimado usuario, soy Aura, su aliada estratégica y consultora de negocios. Mi objetivo es proporcionarle análisis precisos para optimizar la rentabilidad de su empresa. He preparado un informe preliminar sobre sus productos estrella y tendencias de inventario. ¿En qué área administrativa puedo asistirle en este momento?",
+                timestamp: new Date()
+            }
+        ]);
         setError(null);
     };
 

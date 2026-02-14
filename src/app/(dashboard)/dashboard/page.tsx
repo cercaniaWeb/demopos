@@ -145,7 +145,7 @@ export default function DashboardPage() {
     return (
         <div className="space-y-8">
             {/* Welcome Section with Store Info */}
-            <div className="glass rounded-2xl p-8 border border-white/10">
+            <div className="glass aura-glow rounded-2xl p-8 border border-white/10">
                 <h1 className="text-4xl font-bold text-gradient mb-2">
                     Bienvenido, {authUser?.name?.split(' ')[0] || 'Usuario'}
                 </h1>
@@ -178,7 +178,7 @@ export default function DashboardPage() {
                         <button
                             key={index}
                             onClick={() => router.push(card.href)}
-                            className="glass rounded-2xl p-6 border border-white/10 hover:bg-white/10 transition-all duration-300 group text-left hover:scale-105 hover:shadow-[0_0_30px_rgba(124,58,237,0.3)]"
+                            className="glass aura-glow rounded-2xl p-6 border border-white/10 hover:bg-white/10 transition-all duration-300 group text-left hover:scale-105"
                         >
                             <div className={`w-16 h-16 rounded-xl bg-gradient-to-br ${card.color} flex items-center justify-center mb-4 group-hover:scale-110 transition-transform duration-300`}>
                                 {card.icon}

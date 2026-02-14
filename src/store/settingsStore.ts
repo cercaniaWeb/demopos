@@ -34,6 +34,9 @@ interface SettingsState {
     // Security
     supervisorPin: string;
 
+    // Appearance
+    theme: 'void' | 'emerald' | 'daylight';
+
     // Actions
     toggleScaleSimulation: () => void;
     setScaleBaudRate: (rate: number) => void;
@@ -41,6 +44,7 @@ interface SettingsState {
     updateTicketConfig: (config: Partial<TicketConfig>) => void;
     updateBankConfig: (config: Partial<BankConfig>) => void;
     setSupervisorPin: (pin: string) => void;
+    setTheme: (theme: 'void' | 'emerald' | 'daylight') => void;
 }
 
 export const useSettingsStore = create<SettingsState>()(
@@ -51,8 +55,9 @@ export const useSettingsStore = create<SettingsState>()(
             scaleBaudRate: 9600,
             barcodeMode: 'scanner',
             supervisorPin: '1234', // Default PIN
+            theme: 'daylight',
             ticketConfig: {
-                headerText: 'Tienda de Abarrotes Racom-POS\nCalle Principal #123\nTel: (555) 123-4567',
+                headerText: 'AURA - Punto de Venta Inteligente\nCalle Principal #123\nTel: (555) 123-4567',
                 footerText: '¡Gracias por su compra!\nVuelva pronto',
                 showLogo: true,
                 showDate: true,
@@ -63,7 +68,7 @@ export const useSettingsStore = create<SettingsState>()(
                 bankName: 'BBVA Bancomer',
                 accountNumber: '1234567890',
                 clabe: '012345678901234567',
-                beneficiary: 'Tienda Racom S.A. de C.V.'
+                beneficiary: 'AURA Solutions S.A. de C.V.'
             },
 
             // Actions
@@ -84,6 +89,9 @@ export const useSettingsStore = create<SettingsState>()(
 
             setSupervisorPin: (pin) =>
                 set({ supervisorPin: pin }),
+
+            setTheme: (theme) =>
+                set({ theme }),
         }),
         {
             name: 'pos-settings-storage',

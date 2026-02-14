@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import Button from '@/components/atoms/Button';
 import { AlertCircle } from 'lucide-react';
 
 interface LoginFormProps {
@@ -9,12 +8,8 @@ interface LoginFormProps {
 }
 
 const LoginForm: React.FC<LoginFormProps> = ({ onLogin, loading = false, error }) => {
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-
-  const handleDemoAccess = () => {
-    onLogin('demo@cercania.com', 'demo1234');
-  };
+  const [email, setEmail] = useState('demo@cercania.com');
+  const [password, setPassword] = useState('demo1234');
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -25,6 +20,7 @@ const LoginForm: React.FC<LoginFormProps> = ({ onLogin, loading = false, error }
     <form className="mt-8 space-y-6" onSubmit={handleSubmit}>
       {/* Glass Card Container */}
       <div className="glass rounded-2xl p-8 border border-white/10 shadow-[0_8px_32px_rgba(0,0,0,0.3)]">
+
         {/* Error Alert */}
         {error && (
           <div className="mb-6 p-4 rounded-xl bg-red-500/10 border border-red-500/30 backdrop-blur-sm">
@@ -35,103 +31,67 @@ const LoginForm: React.FC<LoginFormProps> = ({ onLogin, loading = false, error }
           </div>
         )}
 
-        {/* Email Input */}
-        <div className="space-y-2 mb-5">
-          <label htmlFor="email" className="block text-sm font-medium text-foreground/90">
-            Correo electrónico
-          </label>
-          <input
-            id="email"
-            type="email"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-            required
-            placeholder="tu@ejemplo.com"
-            className="w-full px-4 py-3 rounded-xl bg-white/5 border border-white/10 text-foreground placeholder:text-muted-foreground/50 focus:outline-none focus:ring-2 focus:ring-primary/50 focus:border-primary/50 transition-all duration-200 hover:bg-white/10"
-          />
+        {/* Demo Mode Notice */}
+        <div className="mb-6 bg-blue-500/10 border border-blue-500/20 rounded-xl p-4 text-center">
+          <h3 className="text-blue-400 font-bold mb-1">Modo Demo Activo</h3>
+          <p className="text-xs text-blue-300/80">Credenciales precargadas para acceso inmediato.</p>
         </div>
 
-        {/* Password Input */}
-        <div className="space-y-2 mb-6">
-          <label htmlFor="password" className="block text-sm font-medium text-foreground/90">
-            Contraseña
-          </label>
-          <input
-            id="password"
-            type="password"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-            required
-            placeholder="••••••••"
-            className="w-full px-4 py-3 rounded-xl bg-white/5 border border-white/10 text-foreground placeholder:text-muted-foreground/50 focus:outline-none focus:ring-2 focus:ring-primary/50 focus:border-primary/50 transition-all duration-200 hover:bg-white/10"
-          />
-        </div>
-
-        {/* Remember Me & Forgot Password */}
-        <div className="flex items-center justify-between mb-6">
-          <div className="flex items-center">
-            <input
-              id="remember-me"
-              name="remember-me"
-              type="checkbox"
-              className="h-4 w-4 rounded border-white/20 bg-white/5 text-primary focus:ring-primary/50 focus:ring-offset-0 cursor-pointer"
-            />
-            <label htmlFor="remember-me" className="ml-2 block text-sm text-foreground/80 cursor-pointer select-none">
-              Recordarme
+        <div className="space-y-4">
+          <div>
+            <label htmlFor="email" className="block text-sm font-medium text-gray-400 mb-1">
+              Usuario Demo
             </label>
+            <input
+              id="email"
+              type="email"
+              disabled
+              className="w-full px-4 py-3 rounded-xl bg-gray-800/50 border border-gray-700 text-gray-400 cursor-not-allowed"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+            />
           </div>
 
-          <a href="/forgot-password" className="text-sm font-medium text-primary hover:text-primary/80 transition-colors">
-            ¿Olvidaste tu contraseña?
-          </a>
-        </div>
-
-        {/* Submit Button */}
-        <Button
-          type="submit"
-          fullWidth
-          disabled={loading}
-          variant="primary"
-          size="lg"
-        >
-          {loading ? (
-            <>
-              <svg className="animate-spin -ml-1 mr-3 h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
-                <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
-                <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
-              </svg>
-              Iniciando sesión...
-            </>
-          ) : (
-            'Iniciar sesión'
-          )}
-        </Button>
-
-        {/* Register Link */}
-        <div className="mt-6 text-center space-y-4">
-          <p className="text-sm text-muted-foreground">
-            ¿No tienes una cuenta?{' '}
-            <a href="/register" className="font-semibold text-primary hover:text-primary/80 transition-colors">
-              Regístrate aquí
-            </a>
-          </p>
-
-          <div className="pt-4 border-t border-white/5">
-            <button
-              type="button"
-              onClick={handleDemoAccess}
-              className="w-full py-3 rounded-xl bg-gradient-to-r from-blue-600/20 to-purple-600/20 border border-blue-500/30 text-blue-300 font-bold text-sm hover:from-blue-600/30 hover:to-purple-600/30 transition-all duration-300 flex items-center justify-center gap-2"
-            >
-              <span className="text-lg">✨</span> Acceso Demo Gratuito
-            </button>
+          <div>
+            <label htmlFor="pass" className="block text-sm font-medium text-gray-400 mb-1">
+              Contraseña
+            </label>
+            <input
+              id="pass"
+              type="password"
+              disabled
+              className="w-full px-4 py-3 rounded-xl bg-gray-800/50 border border-gray-700 text-gray-400 cursor-not-allowed"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+            />
           </div>
         </div>
+
+        <div className="mt-8">
+          <button
+            type="submit"
+            disabled={loading}
+            className="w-full py-3 rounded-xl bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-500 hover:to-indigo-500 text-white font-bold shadow-lg shadow-blue-900/20 transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed transform active:scale-[0.98]"
+          >
+            {loading ? (
+              <span className="flex items-center justify-center gap-2">
+                <svg className="animate-spin h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                  <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
+                  <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                </svg>
+                Iniciando...
+              </span>
+            ) : (
+              'Ingresar al Sistema'
+            )}
+          </button>
+        </div>
+
+        <p className="mt-4 text-center text-xs text-gray-500">
+          No se requieren datos reales. El sistema se reinicia al salir.
+        </p>
+
       </div>
-
-      {/* Additional Help Text */}
-      <p className="text-center text-xs text-muted-foreground/60">
-        Al iniciar sesión, aceptas nuestros términos de servicio y política de privacidad
-      </p>
     </form>
   );
 };

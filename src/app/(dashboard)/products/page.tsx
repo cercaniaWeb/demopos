@@ -141,9 +141,9 @@ const ProductsPage = () => {
       <div className="flex flex-col md:flex-row justify-between items-start md:items-center mb-6 gap-4">
         <div>
           <h1 className="text-2xl font-bold text-foreground">Mis Productos</h1>
-          <p className="text-gray-400 text-sm mt-1">
+          <p className="text-muted-foreground text-sm mt-1">
             Productos disponibles en esta sucursal •{' '}
-            <span className="text-blue-400">{storeProducts.length} productos</span>
+            <span className="text-primary">{storeProducts.length} productos</span>
           </p>
         </div>
         <Button variant="primary" onClick={() => router.push('/products/nuevo')} className="w-full md:w-auto justify-center">
@@ -152,7 +152,7 @@ const ProductsPage = () => {
       </div>
 
       {error && (
-        <div className="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded mb-4">
+        <div className="bg-destructive/10 border border-destructive/50 text-destructive px-4 py-3 rounded mb-4">
           Error: {error}
         </div>
       )}
@@ -241,29 +241,29 @@ const ProductsPage = () => {
                 onChange={(e) => setNewProduct({ ...newProduct, barcode: e.target.value })}
                 placeholder="Escanea o escribe..."
               />
-              <div className="md:col-span-2 bg-gray-800/5 border border-gray-200 dark:bg-gray-800/30 dark:border-gray-700 rounded-lg p-4">
-                  <label className="flex items-center gap-3 cursor-pointer">
-                      <input
-                          type="checkbox"
-                          checked={newProduct.is_weighted}
-                          onChange={(e) => setNewProduct({ ...newProduct, is_weighted: e.target.checked })}
-                          className="w-5 h-5 rounded border-gray-300 dark:border-gray-600 bg-gray-100 dark:bg-gray-700 text-blue-500 focus:ring-2 focus:ring-blue-500"
-                      />
-                      <div>
-                          <span className="text-gray-900 dark:text-white font-medium">Producto por peso</span>
-                          <p className="text-gray-500 dark:text-gray-400 text-sm">
-                              El producto se venderá por kilogramo (kg) en lugar de por unidad
-                          </p>
-                      </div>
-                  </label>
+              <div className="md:col-span-2 bg-card border border-border rounded-lg p-4">
+                <label className="flex items-center gap-3 cursor-pointer">
+                  <input
+                    type="checkbox"
+                    checked={newProduct.is_weighted}
+                    onChange={(e) => setNewProduct({ ...newProduct, is_weighted: e.target.checked })}
+                    className="w-5 h-5 rounded border-border bg-muted text-primary focus:ring-2 focus:ring-primary"
+                  />
+                  <div>
+                    <span className="text-foreground font-medium">Producto por peso</span>
+                    <p className="text-muted-foreground text-sm">
+                      El producto se venderá por kilogramo (kg) en lugar de por unidad
+                    </p>
+                  </div>
+                </label>
               </div>
               <div className="md:col-span-2">
-                  <InputField
-                      label="Descripción"
-                      value={newProduct.description}
-                      onChange={(e) => setNewProduct({ ...newProduct, description: e.target.value })}
-                      placeholder="Descripción del producto"
-                  />
+                <InputField
+                  label="Descripción"
+                  value={newProduct.description}
+                  onChange={(e) => setNewProduct({ ...newProduct, description: e.target.value })}
+                  placeholder="Descripción del producto"
+                />
               </div>
             </div>
 

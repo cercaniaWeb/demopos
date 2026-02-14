@@ -44,7 +44,8 @@ export const useProductStore = create<ProductState>((set) => ({
       // 1. Crear el producto
       // Extract batch fields and other non-schema fields
       // @ts-ignore
-      const { batch_number, expiry_date, is_active, selling_price, measurement_unit, ...rest } = productData;
+      const { batch_number, expiry_date, is_active, selling_price, measurement_unit, is_batch_tracked, stock, ...rest } = productData;
+
 
       const { data, error } = await supabase
         .from('products')
@@ -71,12 +72,8 @@ export const useProductStore = create<ProductState>((set) => ({
             product_id: data.id,
             store_id: storeId,
             stock: productData.stock || 0,
-            is_active: true,
             min_stock: productData.min_stock || 0,
             max_stock: null,
-            // Custom prices can be set later; initially use null to fall back to product prices
-            custom_selling_price: null,
-            custom_cost_price: null,
           }]);
 
         if (invError) {

@@ -14,7 +14,8 @@ const NewProductPage = () => {
   const [cost, setCost] = useState('');
   const [sku, setSku] = useState('');
   const [barcode, setBarcode] = useState('');
-  const [category, setCategory] = useState('');
+  const [categoryId, setCategoryId] = useState(''); // Stores the UUID
+  const [categories, setCategories] = useState<any[]>([]); // List of categories
   const [stock, setStock] = useState('');
   const [minStock, setMinStock] = useState('');
   const [isBatchTracked, setIsBatchTracked] = useState(false);
@@ -24,7 +25,14 @@ const NewProductPage = () => {
   const [image, setImage] = useState<File | null>(null);
   const [imageUrl, setImageUrl] = useState('');
 
-  // Mock user data
+  // Fetch categories on mount
+  React.useEffect(() => {
+    const fetchCategories = async () => {
+      const { data } = await supabase.from('categories').select('*').order('name');
+      if (data) setCategories(data);
+    };
+    fetchCategories();
+  }, []);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -38,7 +46,7 @@ const NewProductPage = () => {
         cost: parseFloat(cost),
         sku,
         barcode,
-        category,
+        category_id: categoryId, // Use ID
         stock: parseInt(stock),
         min_stock: parseInt(minStock),
         is_active: true,
@@ -61,7 +69,7 @@ const NewProductPage = () => {
       setCost('');
       setSku('');
       setBarcode('');
-      setCategory('');
+      setCategoryId('');
       setStock('');
       setMinStock('');
       setIsWeighted(false);
@@ -69,8 +77,11 @@ const NewProductPage = () => {
       setBatchNumber('');
       setExpiryDate('');
       setImage(null);
+      setImageUrl('');
 
       console.log('Product created successfully');
+      alert('Producto creado exitosamente');
+      window.history.back();
     } catch (err) {
       console.error('Error creating product:', err);
     }
@@ -79,11 +90,11 @@ const NewProductPage = () => {
   return (
     <div>
       <div className="mb-6">
-        <h1 className="text-2xl font-bold text-gray-900">Nuevo Producto</h1>
-        <p className="text-gray-600">Añadir un nuevo producto al inventario</p>
+        <h1 className="text-2xl font-bold text-foreground">Nuevo Producto</h1>
+        <p className="text-muted-foreground">Añadir un nuevo producto al inventario</p>
       </div>
 
-      <div className="glass rounded-xl border border-white/10 shadow p-6">
+      <div className="glass rounded-xl border border-border shadow p-6">
         <form onSubmit={handleSubmit} className="space-y-6">
           {error && (
             <div className="bg-red-500/10 border border-red-500/50 text-red-500 px-4 py-3 rounded">
@@ -158,17 +169,27 @@ const NewProductPage = () => {
                 placeholder="Código de barras UPC/EAN"
               />
 
-              <InputField
-                id="category"
-                label="Categoría"
-                type="text"
-                value={category}
-                onChange={(e) => setCategory(e.target.value)}
-                required
-                placeholder="Categoría del producto"
-              />
+              <div className="flex flex-col space-y-2">
+                <label htmlFor="categoryId" className="text-sm font-medium text-muted-foreground">
+                  Categoría
+                </label>
+                <select
+                  id="categoryId"
+                  value={categoryId}
+                  onChange={(e) => setCategoryId(e.target.value)}
+                  className="w-full bg-muted/50 border border-border rounded-xl px-4 py-3 text-foreground focus:outline-none focus:border-primary/50 focus:ring-2 focus:ring-primary/20 focus:bg-muted transition-all duration-300 appearance-none"
+                  required
+                >
+                  <option value="" className="bg-card text-muted-foreground">Seleccionar categoría</option>
+                  {categories.map((cat) => (
+                    <option key={cat.id} value={cat.id} className="bg-card text-foreground">
+                      {cat.name}
+                    </option>
+                  ))}
+                </select>
+              </div>
 
-              <div className="grid grid-cols-2 gap-4">
+              <div className="grid grid-cols-2 gap-4 mt-4">
                 <InputField
                   id="stock"
                   label="Stock Inicial"
@@ -191,12 +212,12 @@ const NewProductPage = () => {
               </div>
 
               <div className="mt-4 space-y-4">
-                <label className="flex items-center space-x-3 p-4 border border-white/10 rounded-lg bg-white/5 cursor-pointer hover:bg-white/10 transition-colors">
+                <label className="flex items-center space-x-3 p-4 border border-border rounded-lg bg-muted/20 cursor-pointer hover:bg-muted/40 transition-colors">
                   <input
                     type="checkbox"
                     checked={isWeighted}
                     onChange={(e) => setIsWeighted(e.target.checked)}
-                    className="h-5 w-5 text-primary focus:ring-primary border-white/20 bg-black/20 rounded"
+                    className="h-5 w-5 text-primary focus:ring-primary border-border bg-background rounded"
                   />
                   <div className="flex flex-col">
                     <span className="text-sm font-medium text-foreground">Venta a Granel / Por Peso</span>
@@ -204,12 +225,12 @@ const NewProductPage = () => {
                   </div>
                 </label>
 
-                <label className="flex items-center space-x-3 p-4 border border-white/10 rounded-lg bg-white/5 cursor-pointer hover:bg-white/10 transition-colors">
+                <label className="flex items-center space-x-3 p-4 border border-border rounded-lg bg-muted/20 cursor-pointer hover:bg-muted/40 transition-colors">
                   <input
                     type="checkbox"
                     checked={isBatchTracked}
                     onChange={(e) => setIsBatchTracked(e.target.checked)}
-                    className="h-5 w-5 text-primary focus:ring-primary border-white/20 bg-black/20 rounded"
+                    className="h-5 w-5 text-primary focus:ring-primary border-border bg-background rounded"
                   />
                   <div className="flex flex-col">
                     <span className="text-sm font-medium text-foreground">Controlar por Lotes / Caducidad</span>
@@ -218,7 +239,7 @@ const NewProductPage = () => {
                 </label>
 
                 {isBatchTracked && (
-                  <div className="grid grid-cols-2 gap-4 p-4 bg-white/5 rounded-lg border border-white/10">
+                  <div className="grid grid-cols-2 gap-4 p-4 bg-muted/20 rounded-lg border border-border">
                     <InputField
                       label="Número de Lote Inicial"
                       value={batchNumber}
@@ -241,7 +262,7 @@ const NewProductPage = () => {
                 </label>
 
                 <div className="flex items-start gap-4">
-                  <div className="w-32 h-32 bg-white/5 rounded-lg border border-white/10 flex items-center justify-center overflow-hidden relative group">
+                  <div className="w-32 h-32 bg-muted rounded-lg border border-border flex items-center justify-center overflow-hidden relative group">
                     {imageUrl ? (
                       <img
                         src={imageUrl}
@@ -254,7 +275,7 @@ const NewProductPage = () => {
                   </div>
 
                   <div className="flex flex-col gap-2 flex-1">
-                    <div className="flex justify-center px-6 pt-5 pb-6 border-2 border-white/10 border-dashed rounded-md hover:border-primary/50 transition-colors">
+                    <div className="flex justify-center px-6 pt-5 pb-6 border-2 border-border border-dashed rounded-md hover:border-primary/50 transition-colors">
                       <div className="space-y-1 text-center">
                         <div className="flex text-sm text-muted-foreground justify-center">
                           <label htmlFor="file-upload" className="relative cursor-pointer rounded-md font-medium text-primary hover:text-primary/80">

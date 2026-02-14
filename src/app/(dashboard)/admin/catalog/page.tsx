@@ -128,15 +128,15 @@ const MasterCatalogPage = () => {
         <RoleGuard roles={['admin']} redirectTo="/products">
             <div>
                 {/* Header */}
-                <div className="bg-gray-800/50 backdrop-blur-lg border border-gray-700 rounded-2xl p-6 mb-6">
+                <div className="glass rounded-2xl p-6 mb-6">
                     <div className="flex items-center justify-between">
                         <div className="flex items-center gap-4">
                             <div className="p-3 bg-blue-600/20 rounded-xl border border-blue-500/50">
                                 <Globe className="text-blue-400" size={32} />
                             </div>
                             <div>
-                                <h1 className="text-white text-2xl font-bold">Catálogo Maestro</h1>
-                                <p className="text-gray-400 text-sm mt-1">
+                                <h1 className="text-foreground text-2xl font-bold">Catálogo Maestro</h1>
+                                <p className="text-muted-foreground text-sm mt-1">
                                     Gestión global de productos para todas las sucursales
                                 </p>
                             </div>
@@ -153,7 +153,7 @@ const MasterCatalogPage = () => {
                 </div>
 
                 {/* Search Bar */}
-                <div className="bg-gray-800/50 backdrop-blur-lg border border-gray-700 rounded-2xl p-4 mb-6">
+                <div className="glass rounded-2xl p-4 mb-6">
                     <InputField
                         label="Buscar"
                         type="text"
@@ -165,17 +165,17 @@ const MasterCatalogPage = () => {
                 </div>
 
                 {error && (
-                    <div className="bg-red-500/10 border border-red-500/50 text-red-400 px-4 py-3 rounded mb-4">
+                    <div className="bg-destructive/10 border border-destructive/50 text-destructive px-4 py-3 rounded mb-4">
                         Error: {error}
                     </div>
                 )}
 
                 {/* Products Table */}
-                <div className="bg-gray-800/50 backdrop-blur-lg border border-gray-700 rounded-2xl overflow-hidden">
+                <div className="glass rounded-2xl overflow-hidden">
                     <div className="overflow-x-auto">
                         <table className="w-full">
-                            <thead className="bg-white/5 border-b border-white/10">
-                                <tr className="text-left text-gray-300 text-sm">
+                            <thead className="bg-muted/50 border-b border-border">
+                                <tr className="text-left text-muted-foreground text-sm">
                                     <th className="p-4 font-medium">Producto</th>
                                     <th className="p-4 font-medium">SKU</th>
                                     <th className="p-4 font-medium">Código de Barras</th>
@@ -186,45 +186,45 @@ const MasterCatalogPage = () => {
                                     <th className="p-4 font-medium text-center">Acciones</th>
                                 </tr>
                             </thead>
-                            <tbody className="divide-y divide-white/5">
+                            <tbody className="divide-y divide-border">
                                 {loading ? (
                                     <tr>
-                                        <td colSpan={8} className="p-12 text-center text-gray-500">
+                                        <td colSpan={8} className="p-12 text-center text-muted-foreground">
                                             Cargando productos...
                                         </td>
                                     </tr>
                                 ) : filteredProducts.length === 0 ? (
                                     <tr>
                                         <td colSpan={8} className="p-12 text-center">
-                                            <Package className="mx-auto text-gray-600 mb-4" size={48} />
-                                            <p className="text-gray-400">No se encontraron productos en el catálogo maestro</p>
+                                            <Package className="mx-auto text-muted-foreground mb-4 opacity-50" size={48} />
+                                            <p className="text-muted-foreground">No se encontraron productos en el catálogo maestro</p>
                                         </td>
                                     </tr>
                                 ) : (
                                     filteredProducts.map((product) => (
-                                        <tr key={product.id} className="hover:bg-white/5 transition-colors">
+                                        <tr key={product.id} className="hover:bg-muted/30 transition-colors">
                                             <td className="p-4">
                                                 <div>
-                                                    <p className="text-white font-medium">{product.name}</p>
+                                                    <p className="text-foreground font-medium">{product.name}</p>
                                                     {product.description && (
-                                                        <p className="text-gray-400 text-sm">{product.description}</p>
+                                                        <p className="text-muted-foreground text-sm">{product.description}</p>
                                                     )}
                                                 </div>
                                             </td>
-                                            <td className="p-4 text-gray-300 font-mono text-sm">{product.sku}</td>
-                                            <td className="p-4 text-gray-300 font-mono text-sm">{product.barcode || '-'}</td>
-                                            <td className="p-4 text-right text-green-400 font-bold">
+                                            <td className="p-4 text-muted-foreground font-mono text-sm">{product.sku}</td>
+                                            <td className="p-4 text-muted-foreground font-mono text-sm">{product.barcode || '-'}</td>
+                                            <td className="p-4 text-right text-green-500 font-bold">
                                                 ${(product.selling_price ?? product.price ?? 0).toFixed(2)}
                                             </td>
-                                            <td className="p-4 text-right text-gray-300">
+                                            <td className="p-4 text-right text-muted-foreground">
                                                 ${(product.cost_price ?? product.cost ?? 0).toFixed(2)}
                                             </td>
-                                            <td className="p-4 text-gray-300">{product.category || '-'}</td>
+                                            <td className="p-4 text-muted-foreground">{product.category || '-'}</td>
                                             <td className="p-4 text-center">
                                                 <span
                                                     className={`px-2 py-1 rounded-full text-xs font-medium ${product.is_active
-                                                        ? 'bg-green-500/10 text-green-400 border border-green-500/20'
-                                                        : 'bg-red-500/10 text-red-400 border border-red-500/20'
+                                                        ? 'bg-green-500/10 text-green-500 border border-green-500/20'
+                                                        : 'bg-red-500/10 text-red-500 border border-red-500/20'
                                                         }`}
                                                 >
                                                     {product.is_active ? 'Activo' : 'Inactivo'}
@@ -234,13 +234,13 @@ const MasterCatalogPage = () => {
                                                 <div className="flex justify-center gap-2">
                                                     <button
                                                         onClick={() => handleEdit(product)}
-                                                        className="text-blue-400 hover:text-blue-300 hover:bg-blue-400/10 p-2 rounded-lg transition-colors"
+                                                        className="text-blue-500 hover:text-blue-400 hover:bg-blue-500/10 p-2 rounded-lg transition-colors"
                                                         title="Editar"
                                                     >
                                                         <Edit size={18} />
                                                     </button>
                                                     <button
-                                                        className="text-red-400 hover:text-red-300 hover:bg-red-400/10 p-2 rounded-lg transition-colors"
+                                                        className="text-destructive hover:text-red-400 hover:bg-destructive/10 p-2 rounded-lg transition-colors"
                                                         title="Eliminar"
                                                         onClick={() => {
                                                             if (confirm('¿Estás seguro de eliminar este producto del catálogo global?')) {
@@ -359,14 +359,14 @@ const MasterCatalogPage = () => {
                                 />
                                 {parseInt(newProduct.stock) > 0 && (
                                     <div className="mt-3">
-                                        <label className="block text-sm font-medium text-gray-400 mb-1">
+                                        <label className="block text-sm font-medium text-muted-foreground mb-1">
                                             Tienda Destino del Stock
                                         </label>
                                         <div className="relative">
                                             <select
                                                 value={selectedStoreId}
                                                 onChange={(e) => setSelectedStoreId(e.target.value)}
-                                                className="w-full bg-gray-800 text-white border border-gray-700 rounded-lg p-3 appearance-none focus:ring-2 focus:ring-blue-500 outline-none"
+                                                className="w-full bg-background text-foreground border border-input rounded-lg p-3 appearance-none focus:ring-2 focus:ring-primary outline-none"
                                             >
                                                 <option value="">-- Selecciona una tienda --</option>
                                                 {stores.map(store => (
@@ -375,7 +375,7 @@ const MasterCatalogPage = () => {
                                                     </option>
                                                 ))}
                                             </select>
-                                            <Store className="absolute right-3 top-3.5 text-gray-500 pointer-events-none" size={18} />
+                                            <Store className="absolute right-3 top-3.5 text-muted-foreground pointer-events-none" size={18} />
                                         </div>
                                     </div>
                                 )}
@@ -391,17 +391,17 @@ const MasterCatalogPage = () => {
                             />
 
                             {/* 10. Venta a Granel / Por Peso (Weighted) */}
-                            <div className="md:col-span-2 bg-gray-800/30 border border-gray-700 rounded-lg p-4">
+                            <div className="md:col-span-2 bg-card border border-border rounded-lg p-4">
                                 <label className="flex items-center gap-3 cursor-pointer">
                                     <input
                                         type="checkbox"
                                         checked={newProduct.is_weighted}
                                         onChange={(e) => setNewProduct({ ...newProduct, is_weighted: e.target.checked })}
-                                        className="w-5 h-5 rounded border-gray-600 bg-gray-700 text-blue-500 focus:ring-2 focus:ring-blue-500"
+                                        className="w-5 h-5 rounded border-border bg-muted text-primary focus:ring-2 focus:ring-primary"
                                     />
                                     <div>
-                                        <span className="text-white font-medium">Venta a Granel / Por Peso</span>
-                                        <p className="text-gray-400 text-sm">
+                                        <span className="text-foreground font-medium">Venta a Granel / Por Peso</span>
+                                        <p className="text-muted-foreground text-sm">
                                             Habilitar para usar con la báscula (Kg)
                                         </p>
                                     </div>
@@ -409,17 +409,17 @@ const MasterCatalogPage = () => {
                             </div>
 
                             {/* 11. Controlar por Lotes / Caducidad */}
-                             <div className="md:col-span-2 bg-gray-800/30 border border-gray-700 rounded-lg p-4">
+                            <div className="md:col-span-2 bg-card border border-border rounded-lg p-4">
                                 <label className="flex items-center gap-3 cursor-pointer">
                                     <input
                                         type="checkbox"
                                         checked={newProduct.is_batch_tracked}
                                         onChange={(e) => setNewProduct({ ...newProduct, is_batch_tracked: e.target.checked })}
-                                        className="w-5 h-5 rounded border-gray-600 bg-gray-700 text-blue-500 focus:ring-2 focus:ring-blue-500"
+                                        className="w-5 h-5 rounded border-border bg-muted text-primary focus:ring-2 focus:ring-primary"
                                     />
                                     <div>
-                                        <span className="text-white font-medium">Controlar por Lotes / Caducidad</span>
-                                        <p className="text-gray-400 text-sm">
+                                        <span className="text-foreground font-medium">Controlar por Lotes / Caducidad</span>
+                                        <p className="text-muted-foreground text-sm">
                                             Habilitar para productos perecederos
                                         </p>
                                     </div>
@@ -428,30 +428,30 @@ const MasterCatalogPage = () => {
 
                             {/* 12. Imagen del Producto */}
                             <div className="md:col-span-2">
-                                <label className="block text-sm font-medium text-gray-300 mb-1">Imagen del Producto</label>
-                                <div className="border-2 border-dashed border-gray-600 rounded-xl p-6 text-center hover:border-blue-500 transition-colors">
+                                <label className="block text-sm font-medium text-muted-foreground mb-1">Imagen del Producto</label>
+                                <div className="border-2 border-dashed border-border rounded-xl p-6 text-center hover:border-primary transition-colors">
                                     <div className="flex flex-col items-center gap-2">
-                                        <div className="w-16 h-16 bg-gray-800 rounded-lg flex items-center justify-center mb-2 overflow-hidden">
+                                        <div className="w-16 h-16 bg-muted rounded-lg flex items-center justify-center mb-2 overflow-hidden">
                                             {newProduct.image_url ? (
                                                 <img src={newProduct.image_url} alt="Preview" className="w-full h-full object-cover" />
                                             ) : (
-                                                <span className="text-xs text-gray-500">Sin imagen</span>
+                                                <span className="text-xs text-muted-foreground">Sin imagen</span>
                                             )}
                                         </div>
-                                        <p className="text-sm text-gray-400">
-                                            <span className="text-blue-400 font-medium hover:underline cursor-pointer">Seleccionar archivo</span> o arrastrar y soltar
+                                        <p className="text-sm text-muted-foreground">
+                                            <span className="text-primary font-medium hover:underline cursor-pointer">Seleccionar archivo</span> o arrastrar y soltar
                                         </p>
-                                        <p className="text-xs text-gray-600">PNG, JPG, GIF hasta 10MB</p>
+                                        <p className="text-xs text-muted-foreground">PNG, JPG, GIF hasta 10MB</p>
                                     </div>
                                 </div>
                                 <div className="mt-3 flex justify-end">
                                     <button
                                         onClick={(e) => {
-                                             e.preventDefault();
-                                             // Random unsplash image for demo
-                                             setNewProduct(prev => ({...prev, image_url: 'https://images.unsplash.com/photo-1546069901-ba9599a7e63c'}));
+                                            e.preventDefault();
+                                            // Random unsplash image for demo
+                                            setNewProduct(prev => ({ ...prev, image_url: 'https://images.unsplash.com/photo-1546069901-ba9599a7e63c' }));
                                         }}
-                                        className="text-sm text-blue-400 hover:text-blue-300 flex items-center gap-1"
+                                        className="text-sm text-primary hover:text-primary/80 flex items-center gap-1"
                                     >
                                         ✨ Auto-generar Imagen
                                     </button>

@@ -147,10 +147,10 @@ const ProductDetailPage = () => {
             <ArrowLeft className="h-5 w-5" />
           </Button>
           <div>
-            <h1 className="text-2xl font-bold text-gray-900">
+            <h1 className="text-2xl font-bold text-foreground">
               {isEditing ? 'Editar Producto' : 'Detalle del Producto'}
             </h1>
-            <p className="text-gray-500 text-sm">ID: {product.id}</p>
+            <p className="text-muted-foreground text-sm">ID: {product.id}</p>
           </div>
         </div>
         <div className="flex gap-2">
@@ -171,7 +171,7 @@ const ProductDetailPage = () => {
         </div>
       </div>
 
-      <div className="glass rounded-xl border border-white/10 shadow p-6">
+      <div className="glass rounded-xl border border-border shadow p-6">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           {/* Left Column: Basic Info */}
           <div className="space-y-4">
@@ -231,10 +231,10 @@ const ProductDetailPage = () => {
             />
 
             {/* Image Section */}
-            <div className="pt-4 border-t border-white/10">
+            <div className="pt-4 border-t border-border">
               <h3 className="text-lg font-medium text-foreground mb-3">Imagen del Producto</h3>
               <div className="flex items-start gap-4">
-                <div className="w-32 h-32 bg-white/5 rounded-lg border border-white/10 flex items-center justify-center overflow-hidden relative group">
+                <div className="w-32 h-32 bg-muted rounded-lg border border-border flex items-center justify-center overflow-hidden relative group">
                   {(isEditing ? formData.image_url : product.image_url) ? (
                     <img
                       src={isEditing ? formData.image_url : product.image_url}
@@ -304,7 +304,7 @@ const ProductDetailPage = () => {
               />
             </div>
 
-            <div className="border-t border-white/10 pt-6">
+            <div className="border-t border-border pt-6">
               <h2 className="text-xl font-semibold mb-4 text-foreground">Control de Lotes y Caducidad</h2>
 
               {isEditing ? (
@@ -314,13 +314,13 @@ const ProductDetailPage = () => {
                       type="checkbox"
                       checked={batchData.isBatchTracked}
                       onChange={(e) => setBatchData({ ...batchData, isBatchTracked: e.target.checked })}
-                      className="rounded border-white/20 bg-white/5 text-primary focus:ring-primary"
+                      className="rounded border-border bg-muted text-primary focus:ring-primary"
                     />
                     <span className="text-sm font-medium text-foreground">Habilitar control por lotes</span>
                   </label>
 
                   {batchData.isBatchTracked && (
-                    <div className="grid grid-cols-2 gap-4 p-4 bg-white/5 rounded-lg border border-white/10">
+                    <div className="grid grid-cols-2 gap-4 p-4 bg-muted/20 rounded-lg border border-border">
                       <InputField
                         label="Número de Lote"
                         value={batchData.batchNumber}
@@ -337,7 +337,7 @@ const ProductDetailPage = () => {
                   )}
                 </div>
               ) : (
-                <div className="bg-white/5 rounded-lg p-4 border border-white/10">
+                <div className="bg-muted/20 rounded-lg p-4 border border-border">
                   {batchData.isBatchTracked ? (
                     <div className="grid grid-cols-2 gap-4">
                       <div>

@@ -41,6 +41,14 @@ module.exports = {
           DEFAULT: "hsl(var(--card))",
           foreground: "hsl(var(--card-foreground))",
         },
+        success: {
+          DEFAULT: "hsl(var(--success))",
+          foreground: "hsl(var(--success-foreground))",
+        },
+        interactive: {
+          DEFAULT: "hsl(var(--interactive))",
+          foreground: "hsl(var(--interactive-foreground))",
+        },
       },
       borderRadius: {
         lg: "var(--radius)",
@@ -55,6 +63,15 @@ module.exports = {
         'glow-conic': 'conic-gradient(from 180deg at 50% 50%, #2a8af6 0deg, #a853ba 180deg, #e92a67 360deg)',
       },
       keyframes: {
+        "press-down": {
+          "0%": { transform: "scale(1)" },
+          "50%": { transform: "scale(0.98)" },
+          "100%": { transform: "scale(1)" },
+        },
+        "fade-in-up": {
+          "0%": { opacity: "0", transform: "translateY(10px)" },
+          "100%": { opacity: "1", transform: "translateY(0)" },
+        },
         float: {
           '0%, 100%': { transform: 'translateY(0)' },
           '50%': { transform: 'translateY(-10px)' },
@@ -73,6 +90,8 @@ module.exports = {
         float: 'float 6s ease-in-out infinite',
         'pulse-glow': 'pulse-glow 3s ease-in-out infinite',
         'aurora': 'aurora 15s ease infinite',
+        "press": "press-down 0.1s ease-out",
+        "appear": "fade-in-up 0.3s ease-out forwards",
       },
     },
   },

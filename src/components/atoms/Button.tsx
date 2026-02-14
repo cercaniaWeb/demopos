@@ -22,13 +22,13 @@ const Button: React.FC<ButtonProps> = ({
   const baseClasses = 'relative inline-flex items-center justify-center rounded-xl font-semibold transition-all duration-300 focus:outline-none disabled:opacity-50 disabled:cursor-not-allowed active:scale-95 overflow-hidden group';
 
   const variantClasses = {
-    primary: 'bg-primary-600 text-white shadow-[0_0_15px_rgba(124,58,237,0.3)] hover:shadow-[0_0_25px_rgba(124,58,237,0.6)] hover:bg-primary-600/90 border border-white/10',
-    secondary: 'bg-gray-200 text-foreground hover:bg-gray-300 border border-gray-300',
-    danger: 'bg-red-600 text-white shadow-[0_0_15px_rgba(239,68,68,0.3)] hover:shadow-[0_0_25px_rgba(239,68,68,0.6)] hover:bg-red-600/90',
-    success: 'bg-green-500 text-white shadow-[0_0_15px_rgba(34,197,94,0.3)] hover:shadow-[0_0_25px_rgba(34,197,94,0.6)] hover:bg-green-600',
-    warning: 'bg-yellow-500 text-white shadow-[0_0_15px_rgba(234,179,8,0.3)] hover:shadow-[0_0_25px_rgba(234,179,8,0.6)] hover:bg-yellow-600',
-    ghost: 'hover:bg-white/5 text-foreground/80 hover:text-foreground',
-    outline: 'border-2 border-primary/50 text-primary hover:bg-primary/10 hover:border-primary hover:shadow-[0_0_15px_rgba(124,58,237,0.2)]',
+    primary: 'bg-primary text-primary-foreground shadow-lg shadow-primary/20 hover:bg-primary/90 border border-primary/20',
+    secondary: 'bg-secondary text-secondary-foreground hover:bg-secondary/80 border border-border',
+    danger: 'bg-destructive text-destructive-foreground shadow-lg shadow-destructive/20 hover:bg-destructive/90',
+    success: 'bg-green-500 text-white shadow-lg shadow-green-500/20 hover:bg-green-600',
+    warning: 'bg-yellow-500 text-white shadow-lg shadow-yellow-500/20 hover:bg-yellow-600',
+    ghost: 'hover:bg-muted text-muted-foreground hover:text-foreground',
+    outline: 'border-2 border-primary/50 text-primary hover:bg-primary/10 hover:border-primary shadow-sm',
   };
 
   const sizeClasses = {

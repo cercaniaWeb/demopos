@@ -3,50 +3,146 @@
 @tailwind utilities;
 
 :root {
-  /* Premium Dark Mode Palette ("Void" Theme) */
-  --background: 224 71% 4%;
+  /* Original Dark Mode Palette ("Void" Theme) - Adjusted to be less dark (Navy Blue) */
+  --background: 234 31% 12%;
   --foreground: 210 40% 98%;
-  
-  --card: 224 71% 4%;
+
+  --card: 234 31% 18%;
   --card-foreground: 210 40% 98%;
-  
-  --popover: 224 71% 4%;
+
+  --popover: 234 31% 12%;
   --popover-foreground: 210 40% 98%;
-  
-  --primary: 263.4 70% 50.4%; /* Violet */
+
+  --primary: 221 83% 53%;
   --primary-foreground: 210 40% 98%;
-  
-  --secondary: 215 27.9% 16.9%;
+
+  --secondary: 234 20% 25%;
   --secondary-foreground: 210 40% 98%;
-  
-  --muted: 215 27.9% 16.9%;
-  --muted-foreground: 217.9 10.6% 64.9%;
-  
-  --accent: 215 27.9% 16.9%;
+
+  --muted: 234 20% 25%;
+  --muted-foreground: 217.9 10.6% 75%;
+
+  --accent: 234 20% 25%;
   --accent-foreground: 210 40% 98%;
-  
-  --destructive: 0 62.8% 30.6%;
+
+  --destructive: 0 72% 51%;
   --destructive-foreground: 210 40% 98%;
-  
-  --border: 215 27.9% 16.9%;
-  --input: 215 27.9% 16.9%;
-  --ring: 263.4 70% 50.4%;
-  
+
+  --border: 234 20% 30%;
+  --input: 234 20% 30%;
+  --ring: 221 83% 53%;
+
+  /* Semantic Tokens */
+  --success: 142 76% 45%;
+  --success-foreground: 355.7 100% 10%;
+
+  --interactive: 221 83% 53%;
+  --interactive-foreground: 210 40% 98%;
+
   --radius: 0.75rem;
+
+  /* Glass Effect Tokens */
+  --glass-bg: rgba(255, 255, 255, 0.05);
+  --glass-border: rgba(255, 255, 255, 0.1);
+  --glass-shadow: 0 4px 30px rgba(0, 0, 0, 0.2);
+}
+
+/* NUEVO TEMA: EMERALD NIGHT (Optimizado para Bares/Noche) */
+.theme-emerald {
+  --background: 164 45% 4%;
+  --foreground: 160 20% 94%;
+
+  --card: 164 35% 6%;
+  --card-foreground: 160 20% 94%;
+
+  --popover: 164 35% 8%;
+  --popover-foreground: 160 20% 94%;
+
+  --primary: 158 64% 52%;
+  --primary-foreground: 164 45% 4%;
+
+  --secondary: 162 30% 15%;
+  --secondary-foreground: 160 20% 94%;
+
+  --muted: 162 20% 12%;
+  --muted-foreground: 164 10% 60%;
+
+  --accent: 158 64% 52%;
+  --accent-foreground: 164 45% 4%;
+
+  --destructive: 345 50% 40%;
+  --destructive-foreground: 210 40% 98%;
+
+  --border: 164 30% 10%;
+  --input: 164 30% 10%;
+  --ring: 158 64% 52%;
+
+  --success: 142 70% 45%;
+  --success-foreground: 164 45% 4%;
+
+  --interactive: 174 45% 12%;
+  --interactive-foreground: 160 60% 80%;
+
+  --radius: 0.75rem;
+
+  /* Glass Effect Tokens (Emerald) */
+  --glass-bg: rgba(5, 17, 14, 0.6);
+  --glass-border: rgba(16, 185, 129, 0.1);
+  --glass-shadow: 0 4px 30px rgba(0, 0, 0, 0.3);
+}
+
+/* TEMA CLARO: DAYLIGHT (Optimizado para Ambientes Diurnos) */
+.theme-daylight {
+  --background: 210 20% 98%;
+  --foreground: 224 71% 4%;
+
+  --card: 0 0% 100%;
+  --card-foreground: 224 71% 4%;
+
+  --popover: 0 0% 100%;
+  --popover-foreground: 224 71% 4%;
+
+  --primary: 221 83% 53%;
+  --primary-foreground: 210 40% 98%;
+
+  --secondary: 210 40% 96.1%;
+  --secondary-foreground: 222.2 47.4% 11.2%;
+
+  --muted: 210 40% 96.1%;
+  --muted-foreground: 215.4 16.3% 46.9%;
+
+  --accent: 221 83% 53%;
+  --accent-foreground: 210 40% 98%;
+
+  --destructive: 0 84.2% 60.2%;
+  --destructive-foreground: 210 40% 98%;
+
+  --border: 214.3 31.8% 91.4%;
+  --input: 214.3 31.8% 91.4%;
+  --ring: 221 83% 53%;
+
+  --success: 142 76% 36%;
+  --success-foreground: 355.7 100% 97.3%;
+
+  --interactive: 221 83% 53%;
+  --interactive-foreground: 210 40% 98%;
+
+  --radius: 0.75rem;
+
+  /* Glass Effect Tokens (Daylight) */
+  --glass-bg: rgba(255, 255, 255, 0.75);
+  --glass-border: rgba(0, 0, 0, 0.08);
+  --glass-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
 }
 
 @layer base {
   * {
     border-color: hsl(var(--border));
   }
+
   body {
     background-color: hsl(var(--background));
     color: hsl(var(--foreground));
-    background-image: 
-        radial-gradient(circle at 50% 0%, rgba(120, 119, 198, 0.15), transparent 50%),
-        radial-gradient(circle at 0% 50%, rgba(56, 189, 248, 0.1), transparent 50%),
-        radial-gradient(circle at 100% 50%, rgba(236, 72, 153, 0.1), transparent 50%);
-    background-attachment: fixed;
     font-feature-settings: "rlig" 1, "calt" 1;
     overflow-x: hidden;
   }
@@ -54,17 +150,17 @@
 
 @layer utilities {
   .glass {
-    background: rgba(255, 255, 255, 0.03);
+    background: var(--glass-bg);
     backdrop-filter: blur(16px);
     -webkit-backdrop-filter: blur(16px);
-    border: 1px solid rgba(255, 255, 255, 0.05);
-    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+    border: 1px solid var(--glass-border);
+    box-shadow: var(--glass-shadow);
   }
 
   .glass-hover {
     transition: all 0.3s ease;
   }
-  
+
   .glass-hover:hover {
     background: rgba(255, 255, 255, 0.08);
     border-color: rgba(255, 255, 255, 0.1);
@@ -73,12 +169,48 @@
   }
 
   .text-gradient {
-    background: linear-gradient(to right, #c084fc, #6366f1, #38bdf8);
+    background: linear-gradient(135deg, #c084fc 0%, #6366f1 50%, #38bdf8 100%);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
   }
-  
+
+  .aura-glow {
+    position: relative;
+  }
+
+  .aura-glow::after {
+    content: '';
+    position: absolute;
+    inset: -1px;
+    background: linear-gradient(135deg, #c084fc, #6366f1, #38bdf8);
+    filter: blur(15px);
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    z-index: -1;
+    border-radius: inherit;
+  }
+
+  .aura-glow:hover::after {
+    opacity: 0.4;
+  }
+
+  .aura-pulse {
+    animation: aura-pulse 3s infinite ease-in-out;
+  }
+
+  @keyframes aura-pulse {
+
+    0%,
+    100% {
+      filter: drop-shadow(0 0 5px rgba(124, 58, 237, 0.3));
+    }
+
+    50% {
+      filter: drop-shadow(0 0 15px rgba(124, 58, 237, 0.6));
+    }
+  }
+
   .text-balance {
     text-wrap: balance;
   }

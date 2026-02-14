@@ -96,17 +96,17 @@ const UserProfileModal: React.FC<UserProfileModalProps> = ({ isOpen, onClose }) 
         >
             <div
                 ref={modalRef}
-                className="w-full max-w-md bg-gray-900 border border-gray-800 rounded-2xl shadow-2xl overflow-hidden"
+                className="w-full max-w-md bg-card border border-border rounded-2xl shadow-2xl overflow-hidden"
             >
                 {/* Header */}
-                <div className="p-6 border-b border-gray-800 flex justify-between items-center bg-gray-900/50">
-                    <h2 className="text-xl font-bold text-white flex items-center gap-2">
-                        <User size={20} className="text-blue-400" />
+                <div className="p-6 border-b border-border flex justify-between items-center bg-muted/30">
+                    <h2 className="text-xl font-bold text-foreground flex items-center gap-2">
+                        <User size={20} className="text-primary" />
                         Mi Perfil
                     </h2>
                     <button
                         onClick={onClose}
-                        className="text-gray-400 hover:text-white transition-colors p-2 hover:bg-gray-800 rounded-lg"
+                        className="text-muted-foreground hover:text-foreground transition-colors p-2 hover:bg-muted rounded-lg"
                     >
                         <X size={20} />
                     </button>
@@ -117,7 +117,7 @@ const UserProfileModal: React.FC<UserProfileModalProps> = ({ isOpen, onClose }) 
                     {/* Avatar Preview */}
                     <div className="flex justify-center mb-6">
                         <div className="relative group">
-                            <div className="relative w-24 h-24 rounded-full bg-gray-800 border-2 border-gray-700 flex items-center justify-center overflow-hidden">
+                            <div className="relative w-24 h-24 rounded-full bg-muted border-2 border-border flex items-center justify-center overflow-hidden">
                                 {formData.avatar_url ? (
                                     <Image
                                         src={formData.avatar_url}
@@ -126,7 +126,7 @@ const UserProfileModal: React.FC<UserProfileModalProps> = ({ isOpen, onClose }) 
                                         className="object-cover"
                                     />
                                 ) : (
-                                    <span className="text-3xl font-bold text-gray-500">
+                                    <span className="text-3xl font-bold text-muted-foreground">
                                         {formData.name.charAt(0).toUpperCase()}
                                     </span>
                                 )}
@@ -165,17 +165,17 @@ const UserProfileModal: React.FC<UserProfileModalProps> = ({ isOpen, onClose }) 
                     />
 
                     {/* Push Notifications Section */}
-                    <div className="bg-white/5 border border-white/10 rounded-xl p-4 space-y-3">
+                    <div className="bg-muted/20 border border-border rounded-xl p-4 space-y-3">
                         <div className="flex items-center justify-between">
                             <div className="flex items-center gap-2">
-                                <Bell size={18} className={isSubscribed ? "text-green-400" : "text-gray-400"} />
-                                <span className="text-sm font-medium text-white">Notificaciones Push</span>
+                                <Bell size={18} className={isSubscribed ? "text-green-500" : "text-muted-foreground"} />
+                                <span className="text-sm font-medium text-foreground">Notificaciones Push</span>
                             </div>
-                            <div className={`px-2 py-0.5 rounded-full text-[10px] uppercase font-bold ${isSubscribed ? 'bg-green-500/20 text-green-400' : 'bg-red-500/20 text-red-400'}`}>
+                            <div className={`px-2 py-0.5 rounded-full text-[10px] uppercase font-bold ${isSubscribed ? 'bg-green-500/20 text-green-500' : 'bg-red-500/20 text-red-500'}`}>
                                 {isSubscribed ? 'Activo' : 'Inactivo'}
                             </div>
                         </div>
-                        <p className="text-xs text-gray-500">
+                        <p className="text-xs text-muted-foreground">
                             Recibe alertas inmediatas en tu navegador cuando se solicite mercancía a tu sucursal.
                         </p>
                         {!isSubscribed ? (

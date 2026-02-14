@@ -69,6 +69,7 @@ export interface Product {
   is_weighted?: boolean; // Not in DB schema
   measurement_unit?: string; // Not in DB schema
   is_batch_tracked?: boolean; // Added by migration
+  is_star?: boolean; // AURA Star Product flag
   created_at?: string;
   updated_at?: string;
 }

@@ -14,7 +14,7 @@ export function generateChatbotReportPDF(reportData: ReportData): void {
     // Add title
     doc.setFontSize(20);
     doc.setTextColor(40, 40, 40);
-    doc.text('Reporte de Consulta - Racom POS', 14, 20);
+    doc.text('AURA - Reporte de Consulta', 14, 20);
 
     // Add timestamp
     doc.setFontSize(10);

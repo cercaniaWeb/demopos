@@ -27,17 +27,17 @@ const Input: React.FC<InputProps> = ({
     <div className={`w-full group ${containerClassName}`}>
       <div className="relative">
         <input
-          className={`peer w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 pt-5 pb-2 text-white placeholder-transparent focus:outline-none focus:border-primary/50 focus:ring-2 focus:ring-primary/20 focus:bg-white/10 transition-all duration-300 ${error ? 'border-destructive/50 focus:border-destructive' : ''} ${className}`}
+          className={`peer w-full bg-muted/30 border border-input rounded-xl px-4 py-3 pt-5 pb-2 text-foreground placeholder-transparent focus:outline-none focus:border-primary/50 focus:ring-2 focus:ring-primary/20 focus:bg-muted transition-all duration-300 ${error ? 'border-destructive/50 focus:border-destructive' : ''} ${className}`}
           placeholder={label || 'Input'}
           {...props}
         />
         {label && (
-          <label className="absolute left-4 top-1 text-xs text-white/50 transition-all duration-300 peer-placeholder-shown:top-3.5 peer-placeholder-shown:text-base peer-focus:top-1 peer-focus:text-xs peer-focus:text-primary pointer-events-none">
+          <label className="absolute left-4 top-1 text-xs text-muted-foreground transition-all duration-300 peer-placeholder-shown:top-3.5 peer-placeholder-shown:text-base peer-focus:top-1 peer-focus:text-xs peer-focus:text-primary pointer-events-none">
             {label}
           </label>
         )}
         {icon && (
-          <div className="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none text-white/40 peer-focus:text-primary transition-colors">
+          <div className="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none text-muted-foreground/50 peer-focus:text-primary transition-colors">
             {icon}
           </div>
         )}

@@ -3,7 +3,7 @@
 import React, { useState } from 'react';
 import InputField from '@/components/molecules/InputField';
 import Button from '@/components/atoms/Button';
-import { Plus, Store, Scale, Camera, Receipt, Bell, Calendar, CheckCircle, Trash2, Banknote, Lock } from 'lucide-react';
+import { Plus, Store, Scale, Camera, Receipt, Bell, Calendar, CheckCircle, Trash2, Banknote, Lock, Palette } from 'lucide-react';
 import { useSettingsStore } from '@/store/settingsStore';
 import { useAuthStore } from '@/store/authStore';
 import { useRouter } from 'next/navigation';
@@ -33,7 +33,9 @@ const SettingsPage = () => {
     barcodeMode,
     setBarcodeMode,
     ticketConfig,
-    updateTicketConfig
+    updateTicketConfig,
+    theme,
+    setTheme
   } = useSettingsStore();
 
   const { modalRef, handleBackdropClick } = useModal({
@@ -174,31 +176,34 @@ const SettingsPage = () => {
 
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
         <div className="lg:col-span-1">
-          <div className="glass rounded-xl border border-white/10 shadow p-6">
+          <div className="glass rounded-xl border border-border shadow p-6">
             <h2 className="text-lg font-semibold mb-4 text-foreground">Navegación</h2>
             <ul className="space-y-2">
-              <li className={`border-b border-white/10 pb-2 cursor-pointer ${activeSection === 'company' ? 'text-primary font-bold' : 'text-muted-foreground hover:text-foreground'}`} onClick={() => setActiveSection('company')}>
+              <li className={`border-b border-border pb-2 cursor-pointer ${activeSection === 'company' ? 'text-primary font-bold' : 'text-muted-foreground hover:text-foreground'}`} onClick={() => setActiveSection('company')}>
                 Empresa
               </li>
-              <li className={`border-b border-white/10 pb-2 cursor-pointer ${activeSection === 'stores' ? 'text-primary font-bold' : 'text-muted-foreground hover:text-foreground'}`} onClick={() => setActiveSection('stores')}>
+              <li className={`border-b border-border pb-2 cursor-pointer ${activeSection === 'appearance' ? 'text-primary font-bold' : 'text-muted-foreground hover:text-foreground'}`} onClick={() => setActiveSection('appearance')}>
+                Apariencia
+              </li>
+              <li className={`border-b border-border pb-2 cursor-pointer ${activeSection === 'stores' ? 'text-primary font-bold' : 'text-muted-foreground hover:text-foreground'}`} onClick={() => setActiveSection('stores')}>
                 Sucursales
               </li>
-              <li className={`border-b border-white/10 pb-2 cursor-pointer ${activeSection === 'hardware' ? 'text-primary font-bold' : 'text-muted-foreground hover:text-foreground'}`} onClick={() => setActiveSection('hardware')}>
+              <li className={`border-b border-border pb-2 cursor-pointer ${activeSection === 'hardware' ? 'text-primary font-bold' : 'text-muted-foreground hover:text-foreground'}`} onClick={() => setActiveSection('hardware')}>
                 Hardware (Básculas/Escáneres)
               </li>
-              <li className={`border-b border-white/10 pb-2 cursor-pointer ${activeSection === 'taxes' ? 'text-primary font-bold' : 'text-muted-foreground hover:text-foreground'}`} onClick={() => setActiveSection('taxes')}>
+              <li className={`border-b border-border pb-2 cursor-pointer ${activeSection === 'taxes' ? 'text-primary font-bold' : 'text-muted-foreground hover:text-foreground'}`} onClick={() => setActiveSection('taxes')}>
                 Impuestos
               </li>
-              <li className={`border-b border-white/10 pb-2 cursor-pointer ${activeSection === 'ticket' ? 'text-primary font-bold' : 'text-muted-foreground hover:text-foreground'}`} onClick={() => setActiveSection('ticket')}>
+              <li className={`border-b border-border pb-2 cursor-pointer ${activeSection === 'ticket' ? 'text-primary font-bold' : 'text-muted-foreground hover:text-foreground'}`} onClick={() => setActiveSection('ticket')}>
                 Editor de Ticket
               </li>
-              <li className={`border-b border-white/10 pb-2 cursor-pointer ${activeSection === 'reminders' ? 'text-primary font-bold' : 'text-muted-foreground hover:text-foreground'}`} onClick={() => setActiveSection('reminders')}>
+              <li className={`border-b border-border pb-2 cursor-pointer ${activeSection === 'reminders' ? 'text-primary font-bold' : 'text-muted-foreground hover:text-foreground'}`} onClick={() => setActiveSection('reminders')}>
                 Recordatorios
               </li>
-              <li className={`border-b border-white/10 pb-2 cursor-pointer ${activeSection === 'bank' ? 'text-primary font-bold' : 'text-muted-foreground hover:text-foreground'}`} onClick={() => setActiveSection('bank')}>
+              <li className={`border-b border-border pb-2 cursor-pointer ${activeSection === 'bank' ? 'text-primary font-bold' : 'text-muted-foreground hover:text-foreground'}`} onClick={() => setActiveSection('bank')}>
                 Datos Bancarios
               </li>
-              <li className={`border-b border-white/10 pb-2 cursor-pointer ${activeSection === 'security' ? 'text-primary font-bold' : 'text-muted-foreground hover:text-foreground'}`} onClick={() => setActiveSection('security')}>
+              <li className={`border-b border-border pb-2 cursor-pointer ${activeSection === 'security' ? 'text-primary font-bold' : 'text-muted-foreground hover:text-foreground'}`} onClick={() => setActiveSection('security')}>
                 Seguridad
               </li>
             </ul>
@@ -206,13 +211,118 @@ const SettingsPage = () => {
         </div>
 
         <div className="lg:col-span-2">
-          <div className="glass rounded-xl border border-white/10 shadow p-6">
+          <div className="glass rounded-xl border border-border shadow p-6">
+            {activeSection === 'appearance' && (
+              <div className="space-y-6">
+                <div>
+                  <h3 className="text-lg font-medium mb-4 text-foreground flex items-center gap-2">
+                    <Palette className="text-primary" size={20} />
+                    Apariencia y Temas
+                  </h3>
+                  <p className="text-sm text-muted-foreground mb-6">
+                    Selecciona el tema visual que mejor se adapte a tu entorno de trabajo.
+                  </p>
+
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    {/* Theme: Void (Default) */}
+                    <div
+                      className={`relative cursor-pointer group rounded-xl border-2 transition-all duration-300 overflow-hidden ${theme === 'void' ? 'border-primary ring-2 ring-primary/20 scale-[1.02]' : 'border-border hover:border-primary/50'}`}
+                      onClick={() => setTheme('void')}
+                    >
+                      <div className="aspect-video w-full bg-[#0b0c15] p-4 relative">
+                        <div className="absolute inset-0 bg-gradient-to-br from-violet-500/10 to-indigo-500/10"></div>
+                        {/* Mock UI */}
+                        <div className="h-full flex flex-col gap-2 opacity-80 pointer-events-none">
+                          <div className="h-2 w-1/3 bg-slate-700/50 rounded"></div>
+                          <div className="flex-1 grid grid-cols-2 gap-2">
+                            <div className="bg-slate-800/50 rounded border border-white/5"></div>
+                            <div className="bg-slate-800/50 rounded border border-white/5"></div>
+                          </div>
+                          <div className="h-8 bg-violet-600 rounded flex items-center justify-center">
+                            <div className="h-2 w-16 bg-white/20 rounded"></div>
+                          </div>
+                        </div>
+                      </div>
+                      <div className="p-4 bg-card">
+                        <div className="flex items-center justify-between mb-1">
+                          <h4 className="font-semibold text-foreground">Void (Default)</h4>
+                          {theme === 'void' && <CheckCircle size={18} className="text-primary" />}
+                        </div>
+                        <p className="text-xs text-muted-foreground">
+                          Tema oscuro profundo con acentos violetas. Ideal para entornos modernos.
+                        </p>
+                      </div>
+                    </div>
+
+                    {/* Theme: Emerald Night */}
+                    <div
+                      className={`relative cursor-pointer group rounded-xl border-2 transition-all duration-300 overflow-hidden ${theme === 'emerald' ? 'border-emerald-500 ring-2 ring-emerald-500/20 scale-[1.02]' : 'border-border hover:border-emerald-500/50'}`}
+                      onClick={() => setTheme('emerald')}
+                    >
+                      <div className="aspect-video w-full bg-[#05110e] p-4 relative">
+                        <div className="absolute inset-0 bg-gradient-to-br from-emerald-500/10 to-teal-500/10"></div>
+                        {/* Mock UI */}
+                        <div className="h-full flex flex-col gap-2 opacity-80 pointer-events-none">
+                          <div className="h-2 w-1/3 bg-emerald-900/30 rounded"></div>
+                          <div className="flex-1 grid grid-cols-2 gap-2">
+                            <div className="bg-emerald-900/20 rounded border border-emerald-500/10"></div>
+                            <div className="bg-emerald-900/20 rounded border border-emerald-500/10"></div>
+                          </div>
+                          <div className="h-8 bg-emerald-600 rounded flex items-center justify-center">
+                            <div className="h-2 w-16 bg-black/20 rounded"></div>
+                          </div>
+                        </div>
+                      </div>
+                      <div className="p-4 bg-card">
+                        <div className="flex items-center justify-between mb-1">
+                          <h4 className="font-semibold text-emerald-400">Emerald Night</h4>
+                          {theme === 'emerald' && <CheckCircle size={18} className="text-emerald-500" />}
+                        </div>
+                        <p className="text-xs text-muted-foreground">
+                          Optimizado para baja luz. Reduce la fatiga visual con tonos verdes profundos.
+                        </p>
+                      </div>
+                    </div>
+                    {/* Theme: Daylight */}
+                    <div
+                      className={`relative cursor-pointer group rounded-xl border-2 transition-all duration-300 overflow-hidden ${theme === 'daylight' ? 'border-blue-500 ring-2 ring-blue-500/20 scale-[1.02]' : 'border-border hover:border-blue-500/50'}`}
+                      onClick={() => setTheme('daylight')}
+                    >
+                      <div className="aspect-video w-full bg-gray-100 p-4 relative">
+                        <div className="absolute inset-0 bg-gradient-to-br from-blue-500/5 to-purple-500/5"></div>
+                        {/* Mock UI */}
+                        <div className="h-full flex flex-col gap-2 opacity-80 pointer-events-none">
+                          <div className="h-2 w-1/3 bg-gray-300 rounded"></div>
+                          <div className="flex-1 grid grid-cols-2 gap-2">
+                            <div className="bg-white rounded border border-gray-200 shadow-sm"></div>
+                            <div className="bg-white rounded border border-gray-200 shadow-sm"></div>
+                          </div>
+                          <div className="h-8 bg-blue-500 rounded flex items-center justify-center">
+                            <div className="h-2 w-16 bg-white/40 rounded"></div>
+                          </div>
+                        </div>
+                      </div>
+                      <div className="p-4 bg-card">
+                        <div className="flex items-center justify-between mb-1">
+                          <h4 className="font-semibold text-foreground">Daylight (Claro)</h4>
+                          {theme === 'daylight' && <CheckCircle size={18} className="text-blue-500" />}
+                        </div>
+                        <p className="text-xs text-muted-foreground">
+                          Tema claro de alto contraste y limpieza visual. Ideal para ambientes muy iluminados.
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            )}
+
             {activeSection === 'company' && (
               <div className="space-y-6">
                 <div>
                   <h3 className="text-lg font-medium mb-4 text-foreground">Información de la Empresa</h3>
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                    <InputField id="companyName" label="Nombre de la Empresa" type="text" defaultValue="Tienda de Abarrotes Racom-POS" required />
+                    <InputField id="companyName" label="Nombre de la Empresa" type="text" defaultValue="AURA - Punto de Venta" required />
                     <InputField id="companyRfc" label="RFC" type="text" defaultValue="TDA123456789" required />
                     <InputField id="companyAddress" label="Dirección" type="text" defaultValue="Calle Principal #123" required />
                     <InputField id="companyPhone" label="Teléfono" type="tel" defaultValue="(555) 123-4567" required />
@@ -237,7 +347,7 @@ const SettingsPage = () => {
 
                 <div className="space-y-3">
                   {stores.map(store => (
-                    <div key={store.id} className="border border-white/10 rounded-lg p-4 flex justify-between items-center bg-white/5">
+                    <div key={store.id} className="border border-border rounded-lg p-4 flex justify-between items-center bg-muted/20">
                       <div className="flex items-center">
                         <div className="bg-primary/20 p-2 rounded-full mr-3">
                           <Store size={20} className="text-primary" />
@@ -261,7 +371,7 @@ const SettingsPage = () => {
                 <div>
                   <h3 className="text-lg font-medium mb-4 text-foreground">Configuración de Hardware</h3>
 
-                  <div className="border border-white/10 rounded-lg p-4 mb-4 bg-white/5">
+                  <div className="border border-border rounded-lg p-4 mb-4 bg-muted/20">
                     <div className="flex items-center justify-between mb-2">
                       <div className="flex items-center">
                         <Scale className="mr-2 text-primary" size={20} />
@@ -273,7 +383,7 @@ const SettingsPage = () => {
                         </span>
                         <button
                           onClick={toggleScaleSimulation}
-                          className={`relative inline-flex h-6 w-11 items-center rounded-full transition-colors focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 focus:ring-offset-background ${scaleSimulationEnabled ? 'bg-primary' : 'bg-gray-700'}`}
+                          className={`relative inline-flex h-6 w-11 items-center rounded-full transition-colors focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 focus:ring-offset-background ${scaleSimulationEnabled ? 'bg-primary' : 'bg-muted'}`}
                         >
                           <span className={`inline-block h-4 w-4 transform rounded-full bg-white transition-transform ${scaleSimulationEnabled ? 'translate-x-6' : 'translate-x-1'}`} />
                         </button>
@@ -296,30 +406,30 @@ const SettingsPage = () => {
                     Escáner de Códigos de Barras
                   </h3>
                   <div className="space-y-3">
-                    <label className="flex items-center p-4 border rounded-lg cursor-pointer hover:bg-gray-50">
+                    <label className="flex items-center p-4 border border-border rounded-lg cursor-pointer hover:bg-muted/50">
                       <input
                         type="radio"
                         name="barcodeMode"
                         checked={barcodeMode === 'scanner'}
                         onChange={() => setBarcodeMode('scanner')}
-                        className="h-4 w-4 text-primary-600 focus:ring-primary-500"
+                        className="h-4 w-4 text-primary focus:ring-primary"
                       />
                       <div className="ml-3">
-                        <div className="font-medium">Escáner USB/Serial</div>
-                        <div className="text-sm text-gray-600">Escáner físico (recomendado)</div>
+                        <div className="font-medium text-foreground">Escáner USB/Serial</div>
+                        <div className="text-sm text-muted-foreground">Escáner físico (recomendado)</div>
                       </div>
                     </label>
-                    <label className="flex items-center p-4 border rounded-lg cursor-pointer hover:bg-gray-50">
+                    <label className="flex items-center p-4 border border-border rounded-lg cursor-pointer hover:bg-muted/50">
                       <input
                         type="radio"
                         name="barcodeMode"
                         checked={barcodeMode === 'camera'}
                         onChange={() => setBarcodeMode('camera')}
-                        className="h-4 w-4 text-primary-600 focus:ring-primary-500"
+                        className="h-4 w-4 text-primary focus:ring-primary"
                       />
                       <div className="ml-3">
-                        <div className="font-medium">Cámara del Dispositivo</div>
-                        <div className="text-sm text-gray-600">Webcam o cámara móvil</div>
+                        <div className="font-medium text-foreground">Cámara del Dispositivo</div>
+                        <div className="text-sm text-muted-foreground">Webcam o cámara móvil</div>
                       </div>
                     </label>
                   </div>
@@ -329,11 +439,11 @@ const SettingsPage = () => {
 
             {activeSection === 'taxes' && (
               <div>
-                <h3 className="text-lg font-medium mb-4">Configuración de Impuestos</h3>
-                <p className="text-sm text-gray-600 mb-4">NOTA: De acuerdo con la documentación, el sistema no aplica impuestos a las ventas.</p>
+                <h3 className="text-lg font-medium mb-4 text-foreground">Configuración de Impuestos</h3>
+                <p className="text-sm text-muted-foreground mb-4">NOTA: De acuerdo con la documentación, el sistema no aplica impuestos a las ventas.</p>
                 <div className="flex items-center">
-                  <input type="checkbox" id="applyTaxes" className="h-4 w-4 text-primary-600 border-gray-300 rounded" defaultChecked={false} disabled />
-                  <label htmlFor="applyTaxes" className="ml-2 block text-sm text-gray-900">Aplicar impuestos a las ventas</label>
+                  <input type="checkbox" id="applyTaxes" className="h-4 w-4 text-primary border-border rounded" defaultChecked={false} disabled />
+                  <label htmlFor="applyTaxes" className="ml-2 block text-sm text-foreground">Aplicar impuestos a las ventas</label>
                 </div>
               </div>
             )}
@@ -348,7 +458,7 @@ const SettingsPage = () => {
                   </h3>
 
                   <div>
-                    <label className="block text-sm font-medium text-gray-300 mb-2">Logo del Ticket</label>
+                    <label className="block text-sm font-medium text-muted-foreground mb-2">Logo del Ticket</label>
                     <div className="flex gap-2 mb-2">
                       <InputField
                         id="logoUrl"
@@ -377,40 +487,40 @@ const SettingsPage = () => {
                         </Button>
                       </div>
                     </div>
-                    <p className="text-xs text-gray-500">Recomendado: Imagen PNG con fondo transparente</p>
+                    <p className="text-xs text-muted-foreground">Recomendado: Imagen PNG con fondo transparente</p>
                   </div>
 
                   <div>
-                    <label className="block text-sm font-medium text-gray-300 mb-2">Encabezado del Ticket</label>
+                    <label className="block text-sm font-medium text-muted-foreground mb-2">Encabezado del Ticket</label>
                     <textarea
                       value={ticketConfig.headerText}
                       onChange={(e) => updateTicketConfig({ headerText: e.target.value })}
-                      className="w-full bg-gray-900 border border-gray-700 rounded-lg p-3 text-sm text-white h-24 focus:border-primary outline-none"
+                      className="w-full bg-muted/50 border border-input rounded-lg p-3 text-sm text-foreground h-24 focus:border-primary outline-none"
                       placeholder="Nombre de la tienda, dirección, etc."
                     />
                   </div>
 
                   <div>
-                    <label className="block text-sm font-medium text-gray-300 mb-2">Pie de Página</label>
+                    <label className="block text-sm font-medium text-muted-foreground mb-2">Pie de Página</label>
                     <textarea
                       value={ticketConfig.footerText}
                       onChange={(e) => updateTicketConfig({ footerText: e.target.value })}
-                      className="w-full bg-gray-900 border border-gray-700 rounded-lg p-3 text-sm text-white h-24 focus:border-primary outline-none"
+                      className="w-full bg-muted/50 border border-input rounded-lg p-3 text-sm text-foreground h-24 focus:border-primary outline-none"
                       placeholder="Mensaje de agradecimiento, políticas, etc."
                     />
                   </div>
 
-                  <div className="space-y-3 bg-white/5 p-4 rounded-lg border border-white/10">
-                    <h4 className="text-sm font-medium text-gray-300 mb-2">Opciones de Visualización</h4>
+                  <div className="space-y-3 bg-muted/20 p-4 rounded-lg border border-border">
+                    <h4 className="text-sm font-medium text-muted-foreground mb-2">Opciones de Visualización</h4>
 
                     <label className="flex items-center cursor-pointer">
                       <input
                         type="checkbox"
                         checked={ticketConfig.showLogo}
                         onChange={(e) => updateTicketConfig({ showLogo: e.target.checked })}
-                        className="h-4 w-4 text-primary rounded border-gray-600 bg-gray-700 focus:ring-primary"
+                        className="h-4 w-4 text-primary rounded border-input bg-muted focus:ring-primary"
                       />
-                      <span className="ml-2 text-sm text-gray-300">Mostrar Logo (Nombre de Tienda Grande)</span>
+                      <span className="ml-2 text-sm text-muted-foreground">Mostrar Logo (Nombre de Tienda Grande)</span>
                     </label>
 
                     <label className="flex items-center cursor-pointer">
@@ -418,9 +528,9 @@ const SettingsPage = () => {
                         type="checkbox"
                         checked={ticketConfig.showDate}
                         onChange={(e) => updateTicketConfig({ showDate: e.target.checked })}
-                        className="h-4 w-4 text-primary rounded border-gray-600 bg-gray-700 focus:ring-primary"
+                        className="h-4 w-4 text-primary rounded border-input bg-muted focus:ring-primary"
                       />
-                      <span className="ml-2 text-sm text-gray-300">Mostrar Fecha y Hora</span>
+                      <span className="ml-2 text-sm text-muted-foreground">Mostrar Fecha y Hora</span>
                     </label>
 
                     <label className="flex items-center cursor-pointer">
@@ -428,9 +538,9 @@ const SettingsPage = () => {
                         type="checkbox"
                         checked={ticketConfig.showCashier}
                         onChange={(e) => updateTicketConfig({ showCashier: e.target.checked })}
-                        className="h-4 w-4 text-primary rounded border-gray-600 bg-gray-700 focus:ring-primary"
+                        className="h-4 w-4 text-primary rounded border-input bg-muted focus:ring-primary"
                       />
-                      <span className="ml-2 text-sm text-gray-300">Mostrar Nombre del Cajero</span>
+                      <span className="ml-2 text-sm text-muted-foreground">Mostrar Nombre del Cajero</span>
                     </label>
                   </div>
                 </div>
@@ -444,7 +554,7 @@ const SettingsPage = () => {
                         {ticketConfig.logoUrl ? (
                           <img src={ticketConfig.logoUrl} alt="Logo" className="h-12 mx-auto mb-2 object-contain" />
                         ) : (
-                          <h1 className="text-xl font-bold">Racom-POS</h1>
+                          <h1 className="text-xl font-bold">AURA</h1>
                         )}
                       </div>
                     )}
@@ -514,7 +624,7 @@ const SettingsPage = () => {
                 </div>
 
                 {/* Add Reminder Form */}
-                <div className="bg-white/5 p-4 rounded-lg border border-white/10 space-y-4">
+                <div className="bg-muted/20 p-4 rounded-lg border border-border space-y-4">
                   <h4 className="text-sm font-medium text-muted-foreground">Nuevo Recordatorio</h4>
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                     <InputField
@@ -550,7 +660,7 @@ const SettingsPage = () => {
                   {loadingReminders ? (
                     <p className="text-muted-foreground text-sm">Cargando...</p>
                   ) : reminders.length === 0 ? (
-                    <div className="text-center py-8 text-muted-foreground bg-white/5 rounded-lg border border-white/10 border-dashed">
+                    <div className="text-center py-8 text-muted-foreground bg-muted/20 rounded-lg border border-border border-dashed">
                       <Bell size={24} className="mx-auto mb-2 opacity-50" />
                       <p>No hay recordatorios pendientes</p>
                     </div>
@@ -559,8 +669,8 @@ const SettingsPage = () => {
                       <div
                         key={reminder.id}
                         className={`p-4 rounded-lg border flex items-start justify-between group transition-all ${reminder.is_completed
-                          ? 'bg-white/5 border-white/5 opacity-60'
-                          : 'bg-white/5 border-white/10 hover:border-primary/50'
+                          ? 'bg-muted/10 border-border opacity-60'
+                          : 'bg-muted/20 border-border hover:border-primary/50'
                           }`}
                       >
                         <div className="flex items-start gap-3">
@@ -658,7 +768,7 @@ const SettingsPage = () => {
                       onChange={(e) => useSettingsStore.getState().setSupervisorPin(e.target.value)}
                       placeholder="4 dígitos"
                     />
-                    <p className="text-xs text-gray-500 mt-2">
+                    <p className="text-xs text-muted-foreground mt-2">
                       Este PIN se solicitará al registrar consumos de empleados.
                     </p>
                   </div>
@@ -675,7 +785,7 @@ const SettingsPage = () => {
           className="fixed inset-0 bg-black/70 backdrop-blur-sm flex items-center justify-center p-4 z-50"
           onClick={handleBackdropClick}
         >
-          <div ref={modalRef} className="glass rounded-2xl p-6 w-full max-w-md border border-white/10">
+          <div ref={modalRef} className="glass rounded-2xl p-6 w-full max-w-md border border-border">
             <h2 className="text-xl font-bold mb-4 text-foreground">Registrar Nueva Tienda</h2>
             <div className="space-y-4">
               <InputField

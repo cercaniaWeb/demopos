@@ -446,6 +446,7 @@ const PaymentModal: React.FC<PaymentModalProps> = ({
                             Cancelar
                         </Button>
                         <Button
+                            id="pos-complete-payment"
                             variant="primary"
                             onClick={handleSubmit}
                             className="flex-[2] py-4 text-lg bg-green-600 hover:bg-green-700"

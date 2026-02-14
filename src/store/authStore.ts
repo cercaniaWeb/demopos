@@ -78,6 +78,17 @@ export const useAuthStore = create<AuthState>((set, get) => ({
       const { data: { user: authUser } } = await supabase.auth.getUser();
 
       if (authUser && session) {
+        // Ensure user exists in public.users
+        try {
+          await fetch('/api/demo/setup-user', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ email: authUser.email })
+          });
+        } catch (e) {
+          console.warn('Sync user failed:', e);
+        }
+
         const isDemo = authUser.email === 'demo@cercania.com';
         set({
           session,
@@ -111,6 +122,14 @@ export const useAuthStore = create<AuthState>((set, get) => ({
         // Call a cleanup routine - in this case we'll try to delete sales and movements for this demo user
         // Note: This requires appropriate RLS policies or a specific edge function
         await supabase.rpc('cleanup_demo_data', { user_id_param: user.id });
+
+        // Clear demo tour flag so it runs again on next login
+        localStorage.removeItem('has_seen_demo_tour'); // Legacy
+        localStorage.removeItem('demo_tour_dashboard');
+        localStorage.removeItem('demo_tour_pos');
+        localStorage.removeItem('demo_tour_inventory');
+        localStorage.removeItem('demo_tour_products');
+        localStorage.removeItem('demo_tour_reports');
       } catch (e) {
         console.error('Error cleaning up demo data:', e);
       }

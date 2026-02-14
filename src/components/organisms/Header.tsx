@@ -3,7 +3,7 @@ import Image from 'next/image';
 import UserAvatar from '@/components/molecules/UserAvatar';
 import Button from '@/components/atoms/Button';
 import Text from '@/components/atoms/Text';
-import { Bell, Calendar, Lock, X, Check, Trash2, History } from 'lucide-react';
+import { Bell, Calendar, Lock, X, Check, Trash2, History, Sparkles } from 'lucide-react';
 import { useNotificationStore } from '@/store/notificationStore';
 import { useModal } from '@/hooks/useModal';
 import { format } from 'date-fns';
@@ -11,6 +11,7 @@ import { es } from 'date-fns/locale';
 import UserProfileModal from '@/components/organisms/UserProfileModal';
 import { useStoreContext } from '@/hooks/useStoreContext';
 import { Store } from 'lucide-react';
+import ChatbotModal from '@/components/organisms/ChatbotModal';
 
 interface HeaderProps {
   user?: {
@@ -28,12 +29,13 @@ const Header: React.FC<HeaderProps> = ({
   user,
   onLogout,
   onMenuToggle,
-  title = 'Racom-POS',
+  title = 'AURA',
   actions
 }) => {
   const { unreadCount, history, markAsRead, clearHistory } = useNotificationStore();
   const [showNotifications, setShowNotifications] = useState(false);
   const [showProfileModal, setShowProfileModal] = useState(false);
+  const [showChatbot, setShowChatbot] = useState(false);
   const { storeName } = useStoreContext();
   const unread = unreadCount();
 
@@ -88,10 +90,24 @@ const Header: React.FC<HeaderProps> = ({
           <div className="flex items-center space-x-2 md:space-x-4">
             {actions && <div>{actions}</div>}
 
+            {/* AURA Chatbot Trigger */}
+            <button
+              id="chatbot-trigger"
+              onClick={() => setShowChatbot(true)}
+              className="p-2 rounded-lg hover:bg-primary/10 transition-colors group relative"
+              title="Preguntar a Aura IA"
+            >
+              <Sparkles className="h-5 w-5 text-primary group-hover:scale-110 transition-transform" />
+              <span className="absolute -top-1 -right-1 flex h-2 w-2">
+                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-primary opacity-75"></span>
+                <span className="relative inline-flex rounded-full h-2 w-2 bg-primary"></span>
+              </span>
+            </button>
+
             {/* Notification Bell */}
             <button
               onClick={() => setShowNotifications(!showNotifications)}
-              className="relative p-2 rounded-lg hover:bg-white/10 transition-colors group"
+              className="relative p-2 rounded-lg hover:bg-muted transition-colors group"
               title="Notificaciones"
             >
               <Bell className={`h-5 w-5 text-muted-foreground group-hover:text-foreground transition-colors ${unread > 0 ? 'animate-pulse' : ''
@@ -150,10 +166,10 @@ const Header: React.FC<HeaderProps> = ({
         >
           <div
             ref={modalRef}
-            className="w-full max-w-md bg-background border-l border-white/10 shadow-2xl h-full flex flex-col animate-in slide-in-from-right duration-300"
+            className="w-full max-w-md bg-background border-l border-border shadow-2xl h-full flex flex-col animate-in slide-in-from-right duration-300"
           >
             {/* Modal Header */}
-            <div className="p-4 border-b border-white/10 flex justify-between items-center bg-white/5">
+            <div className="p-4 border-b border-border flex justify-between items-center bg-muted/30">
               <div className="flex items-center gap-2">
                 <Bell className="text-primary" size={20} />
                 <h3 className="font-bold text-foreground">Notificaciones</h3>
@@ -172,7 +188,7 @@ const Header: React.FC<HeaderProps> = ({
             </div>
 
             {/* Actions */}
-            <div className="p-3 border-b border-white/10 flex gap-2 bg-white/5">
+            <div className="p-3 border-b border-border flex gap-2 bg-muted/20">
               <button
                 onClick={() => history.forEach(n => markAsRead(n.id))}
                 className="flex-1 px-3 py-2 bg-primary/10 hover:bg-primary/20 text-primary rounded-lg text-sm font-medium transition-colors flex items-center justify-center gap-2"
@@ -199,11 +215,11 @@ const Header: React.FC<HeaderProps> = ({
                   <p>No hay notificaciones</p>
                 </div>
               ) : (
-                <div className="divide-y divide-white/10">
+                <div className="divide-y divide-border">
                   {history.map((notification) => (
                     <div
                       key={notification.id}
-                      className={`p-4 hover:bg-white/5 transition-colors cursor-pointer ${!notification.read ? 'bg-primary/5 border-l-2 border-primary' : ''}`}
+                      className={`p-4 hover:bg-muted transition-colors cursor-pointer ${!notification.read ? 'bg-primary/5 border-l-2 border-primary' : ''}`}
                       onClick={() => markAsRead(notification.id)}
                     >
                       <div className="flex items-start gap-3">
@@ -233,6 +249,11 @@ const Header: React.FC<HeaderProps> = ({
       <UserProfileModal
         isOpen={showProfileModal}
         onClose={() => setShowProfileModal(false)}
+      />
+
+      <ChatbotModal
+        isOpen={showChatbot}
+        onClose={() => setShowChatbot(false)}
       />
     </header>
   );

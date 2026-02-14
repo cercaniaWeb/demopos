@@ -9,14 +9,16 @@ import NotificationToast from '@/components/notifications/NotificationToast';
 const inter = Inter({ subsets: ['latin'] });
 
 export const metadata: Metadata = {
-  title: 'Racom-POS',
-  description: 'Sistema de Punto de Venta para Abarrotes',
+  title: 'AURA',
+  description: 'Sistema de Punto de Venta Inteligente',
   icons: {
     icon: '/iconoapp.png',
     apple: '/iconoapp.png',
   },
   manifest: '/manifest.json',
 };
+
+import ThemeProvider from '@/components/providers/ThemeProvider';
 
 export default function RootLayout({
   children,
@@ -28,8 +30,10 @@ export default function RootLayout({
 
       <body className={inter.className}>
         <RootInitializer>
-          {children}
-          <NotificationToast />
+          <ThemeProvider>
+            {children}
+            <NotificationToast />
+          </ThemeProvider>
         </RootInitializer>
         <Analytics />
       </body>

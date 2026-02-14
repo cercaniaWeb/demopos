@@ -29,7 +29,7 @@ const MainLayout: React.FC<MainLayoutProps> = ({
   user,
   onLogout,
   sidebarItems,
-  title = 'Racom-POS',
+  title = 'AURA',
   showSidebar = true
 }) => {
   const [sidebarOpen, setSidebarOpen] = useState(false);
