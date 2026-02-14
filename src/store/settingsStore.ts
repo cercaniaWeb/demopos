@@ -55,7 +55,7 @@ export const useSettingsStore = create<SettingsState>()(
             scaleBaudRate: 9600,
             barcodeMode: 'scanner',
             supervisorPin: '1234', // Default PIN
-            theme: 'daylight',
+            theme: 'void',
             ticketConfig: {
                 headerText: 'AURA - Punto de Venta Inteligente\nCalle Principal #123\nTel: (555) 123-4567',
                 footerText: '¡Gracias por su compra!\nVuelva pronto',
