@@ -225,7 +225,7 @@ const ProductDetailPage = () => {
 
             <InputField
               label="Categoría"
-              value={isEditing ? formData.category || '' : product.category || ''}
+              value={isEditing ? (typeof formData.category === 'object' ? (formData.category as any).name : (formData.category || '')) : (typeof product.category === 'object' ? (product.category as any).name : (product.category || ''))}
               onChange={(e) => setFormData({ ...formData, category: e.target.value })}
               disabled={!isEditing}
             />

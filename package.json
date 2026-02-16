@@ -19,6 +19,7 @@
     "date-fns": "^4.1.0",
     "dexie": "^4.2.1",
     "dexie-react-hooks": "^4.2.0",
+    "dotenv": "^17.3.1",
     "html2canvas": "^1.4.1",
     "html5-qrcode": "^2.3.8",
     "indexeddb-utils": "^1.0.0",
@@ -58,5 +59,8 @@
     "supabase": "^2.65.6",
     "ts-jest": "^29.1.1",
     "typescript": "^5.2.2"
+  },
+  "engines": {
+    "node": ">=18.17.0"
   }
 }

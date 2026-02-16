@@ -11,7 +11,7 @@ interface ProductCardProps {
   price: number;
   image?: string;
   stock?: number;
-  category?: string;
+  category?: string | { name: string };
   onAddToCart?: () => void;
   onEdit?: () => void;
   onClick?: () => void;
@@ -95,7 +95,7 @@ const ProductCard: React.FC<ProductCardProps> = ({
           <Text variant="h6" className="font-bold text-white tracking-tight leading-tight">{name}</Text>
           {category && (
             <span className="px-2 py-1 rounded-full text-[10px] font-bold uppercase tracking-wider bg-white/10 text-white/70 border border-white/5">
-              {category}
+              {typeof category === 'object' ? (category as any).name : category}
             </span>
           )}
         </div>

@@ -219,7 +219,9 @@ const MasterCatalogPage = () => {
                                             <td className="p-4 text-right text-muted-foreground">
                                                 ${(product.cost_price ?? product.cost ?? 0).toFixed(2)}
                                             </td>
-                                            <td className="p-4 text-muted-foreground">{product.category || '-'}</td>
+                                            <td className="p-4 text-muted-foreground">
+                                                {typeof product.category === 'object' ? product.category.name : (product.category || '-')}
+                                            </td>
                                             <td className="p-4 text-center">
                                                 <span
                                                     className={`px-2 py-1 rounded-full text-xs font-medium ${product.is_active

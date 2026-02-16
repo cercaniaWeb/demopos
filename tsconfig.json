@@ -57,6 +57,7 @@
     "functions",
     "supabase",
     "manda2-app",
+    "scripts",
     "capacitor.config.ts"
   ]
 }

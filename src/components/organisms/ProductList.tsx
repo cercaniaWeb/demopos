@@ -12,7 +12,7 @@ interface Product {
   price: number;
   image?: string;
   stock?: number;
-  category?: string;
+  category?: string | { name: string };
   barcode?: string;
   sku?: string;
   onPriceEdit?: () => void;

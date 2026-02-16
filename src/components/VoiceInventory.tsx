@@ -333,7 +333,7 @@ export const VoiceInventory = () => {
                         <span className="text-sm font-semibold">Imagen Generada</span>
                     </div>
                 ) : (
-                    value || <span className="text-muted-foreground/30 italic text-sm">Esperando...</span>
+                    (typeof value === 'object' && value !== null ? value.name : value) || <span className="text-muted-foreground/30 italic text-sm">Esperando...</span>
                 )}
             </div>
         </div>
@@ -516,7 +516,7 @@ export const VoiceInventory = () => {
                                         </div>
                                         <h3 className="text-3xl font-black tracking-tight">{lastSavedProduct.name}</h3>
                                         <div className="flex items-center gap-4 text-muted-foreground text-sm font-medium">
-                                            <span>{lastSavedProduct.category}</span>
+                                            <span>{typeof lastSavedProduct.category === 'object' ? (lastSavedProduct.category as any).name : lastSavedProduct.category}</span>
                                             <span>•</span>
                                             <span>{lastSavedProduct.stock} unidades</span>
                                             {lastSavedProduct.is_weighted && (
