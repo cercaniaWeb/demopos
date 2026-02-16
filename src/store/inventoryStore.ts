@@ -24,7 +24,14 @@ export const useInventoryStore = create<InventoryState>((set) => ({
     try {
       let query = supabase
         .from('inventory')
-        .select('*')
+        .select(`
+          *,
+          product:products(
+            name,
+            sku,
+            category:categories(name)
+          )
+        `)
         .order('product_id', { ascending: true });
 
       if (storeId) {

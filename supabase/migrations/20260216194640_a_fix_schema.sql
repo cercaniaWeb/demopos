@@ -1,0 +1,7 @@
+ALTER TABLE public.inventory ADD COLUMN IF NOT EXISTS reserved INTEGER DEFAULT 0;
+ALTER TABLE public.products ADD COLUMN IF NOT EXISTS cost_price DECIMAL(10,2);
+ALTER TABLE public.products ADD COLUMN IF NOT EXISTS min_stock INTEGER DEFAULT 5;
+ALTER TABLE public.supplier_visits ADD COLUMN IF NOT EXISTS status VARCHAR(50) DEFAULT 'pending';
+ALTER TABLE public.expiring_products ADD COLUMN IF NOT EXISTS days_until_expiry INTEGER;
+ALTER TABLE public.products ADD COLUMN IF NOT EXISTS track_inventory BOOLEAN DEFAULT TRUE;
+ALTER TABLE public.products ADD COLUMN IF NOT EXISTS is_active BOOLEAN DEFAULT TRUE;

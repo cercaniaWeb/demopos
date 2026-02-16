@@ -25,14 +25,13 @@ const InventoryPage = () => {
   const [editingItem, setEditingItem] = useState<any>(null);
   const [editQuantity, setEditQuantity] = useState('');
 
-  // Combine inventory with product information
+  // Combine inventory with product information from our joined query
   const inventoryWithProductInfo = inventory.map(invItem => {
-    const product = products.find(p => p.id === invItem.product_id);
     return {
       ...invItem,
-      productName: product?.name || 'Producto desconocido',
-      productSKU: product?.sku || 'N/A',
-      productCategory: product?.category || 'N/A',
+      productName: invItem.product?.name || 'Producto desconocido',
+      productSKU: invItem.product?.sku || 'N/A',
+      productCategory: invItem.product?.category?.name || 'N/A',
     };
   });
 
@@ -54,7 +53,7 @@ const InventoryPage = () => {
     // Category filter
     let matchesCategory = true;
     if (categoryFilter) {
-      matchesCategory = item.productCategory.toLowerCase() === categoryFilter.toLowerCase();
+      matchesCategory = item.productCategory?.toLowerCase() === categoryFilter.toLowerCase();
     }
 
     return matchesSearch && matchesStock && matchesCategory;

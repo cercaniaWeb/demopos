@@ -3,6 +3,7 @@ import { X, Send, Download, Sparkles, Trash2 } from 'lucide-react';
 import Button from '@/components/atoms/Button';
 import { useChatbot, ChatMessage } from '@/hooks/useChatbot';
 import { generateChatbotReportPDF } from '@/lib/pdf/generateChatbotReport';
+import AuraIcon from '@/components/atoms/AuraIcon';
 
 interface ChatbotModalProps {
     isOpen: boolean;
@@ -46,8 +47,8 @@ const ChatbotModal: React.FC<ChatbotModalProps> = ({ isOpen, onClose }) => {
                 {/* Header */}
                 <div className="flex items-center justify-between p-6 border-b border-white/10 bg-gradient-to-r from-blue-600/20 to-purple-600/20">
                     <div className="flex items-center gap-3">
-                        <div className="bg-gradient-to-br from-blue-500 to-purple-500 p-2 rounded-lg">
-                            <Sparkles className="text-white" size={24} />
+                        <div className="bg-gradient-to-br from-blue-500/20 to-purple-500/20 p-1.5 rounded-lg border border-white/10">
+                            <AuraIcon size={22} pulsing={false} />
                         </div>
                         <div>
                             <h2 className="text-xl font-bold text-white">Asistente IA - Reportes</h2>
@@ -77,10 +78,10 @@ const ChatbotModal: React.FC<ChatbotModalProps> = ({ isOpen, onClose }) => {
                 <div className="flex-1 overflow-y-auto p-6 space-y-4">
                     {messages.length === 0 ? (
                         <div className="flex flex-col items-center justify-center h-full text-center">
-                            <div className="bg-gradient-to-br from-blue-500/20 to-purple-500/20 p-6 rounded-full mb-4">
-                                <Sparkles size={48} className="text-blue-400" />
+                            <div className="bg-gradient-to-br from-blue-500/20 to-purple-500/20 p-6 rounded-full mb-4 ring-1 ring-white/10">
+                                <AuraIcon size={64} showParticles={true} pulsing={true} />
                             </div>
-                            <h3 className="text-xl font-semibold text-white mb-2">¿En qué puedo ayudarte?</h3>
+                            <h3 className="text-xl font-semibold text-white mb-2">¿Cómo puedo ayudarte hoy?</h3>
                             <p className="text-gray-400 max-w-md">
                                 Pregunta sobre tus ventas, productos más vendidos, estadísticas, etc.
                             </p>

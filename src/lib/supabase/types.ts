@@ -62,8 +62,8 @@ export interface Product {
   barcode?: string;
   min_stock: number;
   stock?: number; // Local stock (not in DB, computed)
-  category?: string;
   category_id?: string;
+  category?: string | { name: string }; // Can be name string or joined object
   image_url?: string;
   is_active?: boolean; // Not in DB schema
   is_weighted?: boolean; // Not in DB schema
@@ -96,6 +96,11 @@ export interface Inventory {
   is_active: boolean;
   min_stock: number;
   max_stock?: number;
+  product?: {
+    name: string;
+    sku: string;
+    category: { name: string };
+  };
   created_at: string;
   updated_at: string;
 }

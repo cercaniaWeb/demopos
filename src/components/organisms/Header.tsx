@@ -13,6 +13,7 @@ import DeveloperCardModal from '@/components/organisms/DeveloperCardModal';
 import { useStoreContext } from '@/hooks/useStoreContext';
 import { Store } from 'lucide-react';
 import ChatbotModal from '@/components/organisms/ChatbotModal';
+import AuraIcon from '@/components/atoms/AuraIcon';
 
 interface HeaderProps {
   user?: {
@@ -101,18 +102,13 @@ const Header: React.FC<HeaderProps> = ({
               <QrCode className="h-5 w-5 text-muted-foreground group-hover:text-primary transition-colors" />
             </button>
 
-            {/* AURA Chatbot Trigger */}
             <button
               id="chatbot-trigger"
               onClick={() => setShowChatbot(true)}
-              className="p-2 rounded-lg hover:bg-primary/10 transition-colors group relative"
+              className="p-1 rounded-lg hover:bg-primary/10 transition-colors group relative"
               title="Preguntar a Aura IA"
             >
-              <Sparkles className="h-5 w-5 text-primary group-hover:scale-110 transition-transform" />
-              <span className="absolute -top-1 -right-1 flex h-2 w-2">
-                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-primary opacity-75"></span>
-                <span className="relative inline-flex rounded-full h-2 w-2 bg-primary"></span>
-              </span>
+              <AuraIcon size={20} />
             </button>
 
             {/* Notification Bell */}
