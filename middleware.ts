@@ -7,7 +7,7 @@ export async function middleware(request: NextRequest) {
     const { pathname } = request.nextUrl;
 
     // Rutas públicas que no requieren autenticación
-    const publicRoutes = ['/login', '/register', '/forgot-password', '/'];
+    const publicRoutes = ['/login', '/register', '/forgot-password', '/', '/tarjeta'];
 
     if (publicRoutes.includes(pathname)) {
         return NextResponse.next();
@@ -85,6 +85,6 @@ export const config = {
          * - favicon.ico (favicon file)
          * - public folder
          */
-        '/((?!api|_next/static|_next/image|favicon.ico|.*\\..*|login|register|forgot-password).*)',
+        '/((?!api|_next/static|_next/image|favicon.ico|.*\\..*|login|register|forgot-password|tarjeta).*)',
     ],
 };
