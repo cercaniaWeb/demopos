@@ -5,9 +5,11 @@ import { useRouter } from 'next/navigation';
 import DataTable from '@/components/molecules/DataTable';
 import Button from '@/components/atoms/Button';
 import InputField from '@/components/molecules/InputField';
+import InventoryCard from '@/components/molecules/InventoryCard';
 import { useInventory } from '@/hooks/useInventory';
 import { useProduct } from '@/hooks/useProduct';
 import { useAuth } from '@/hooks/useAuth';
+import { useResponsive } from '@/hooks/useResponsive';
 import { Filter, Plus, Edit, ArrowLeftRight } from 'lucide-react';
 
 const InventoryPage = () => {
@@ -15,6 +17,7 @@ const InventoryPage = () => {
   const { user } = useAuth();
   const { inventory, loading, error, updateInventory } = useInventory(user?.store_id);
   const { products } = useProduct();
+  const { isMobile } = useResponsive();
   const [searchQuery, setSearchQuery] = useState('');
   const [stockFilter, setStockFilter] = useState('');
   const [categoryFilter, setCategoryFilter] = useState('');
@@ -122,11 +125,11 @@ const InventoryPage = () => {
     <div>
       <div className="flex flex-col md:flex-row justify-between items-start md:items-center mb-6 gap-4">
         <h1 className="text-2xl font-bold text-foreground">Gestión de Inventario</h1>
-        <div className="flex flex-wrap gap-2 w-full md:w-auto">
+        <div className="flex flex-col sm:flex-row flex-wrap gap-2 w-full md:w-auto">
           <Button
             variant="secondary"
             onClick={() => setShowFilters(!showFilters)}
-            className="flex-1 md:flex-none justify-center"
+            className="w-full sm:flex-1 md:flex-none justify-center"
           >
             <Filter size={16} className="mr-2" />
             Filtrar
@@ -134,7 +137,7 @@ const InventoryPage = () => {
           <Button
             variant="secondary"
             onClick={() => router.push('/inventory/transferencias')}
-            className="flex-1 md:flex-none justify-center"
+            className="w-full sm:flex-1 md:flex-none justify-center"
           >
             <ArrowLeftRight size={16} className="mr-2" />
             Transferencias
@@ -142,7 +145,7 @@ const InventoryPage = () => {
           <Button
             variant="primary"
             onClick={handleNewTransfer}
-            className="flex-1 md:flex-none justify-center"
+            className="w-full sm:flex-1 md:flex-none justify-center"
           >
             <Plus size={16} className="mr-2" />
             Nueva Transferencia
@@ -201,13 +204,34 @@ const InventoryPage = () => {
       )}
 
       <div className="glass rounded-xl border border-white/10 shadow p-6 overflow-hidden">
-        <div className="overflow-x-auto">
-          <DataTable
-            data={filteredInventory}
-            columns={tableColumns}
-            showPagination={true}
-          />
-        </div>
+        {isMobile ? (
+          /* Vista de Cards para Móvil */
+          <div className="space-y-4">
+            {filteredInventory.length === 0 ? (
+              <div className="text-center py-12">
+                <p className="text-gray-400">No hay productos en el inventario</p>
+              </div>
+            ) : (
+              filteredInventory.map((item) => (
+                <InventoryCard
+                  key={item.id}
+                  item={item}
+                  onEdit={handleEdit}
+                  onTransfer={handleTransfer}
+                />
+              ))
+            )}
+          </div>
+        ) : (
+          /* Vista de Tabla para Desktop */
+          <div className="overflow-x-auto">
+            <DataTable
+              data={filteredInventory}
+              columns={tableColumns}
+              showPagination={true}
+            />
+          </div>
+        )}
       </div>
 
       {/* Edit Modal */}
