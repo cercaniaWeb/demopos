@@ -25,7 +25,7 @@ export default function RootInitializer({
   useEffect(() => {
     if (isInitialized && !user) {
       const path = window.location.pathname;
-      if (!path.startsWith('/login') && !path.startsWith('/register') && !path.startsWith('/forgot-password') && path !== '/') {
+      if (!path.startsWith('/login') && !path.startsWith('/register') && !path.startsWith('/forgot-password') && !path.startsWith('/tarjeta') && path !== '/') {
         router.push('/login');
       }
     }

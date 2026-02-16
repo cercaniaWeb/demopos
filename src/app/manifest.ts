@@ -11,9 +11,9 @@ export default function manifest(): MetadataRoute.Manifest {
     theme_color: '#1f2937',
     icons: [
       {
-        src: '/logo-aura.svg',
-        sizes: 'any',
-        type: 'image/svg+xml',
+        src: '/iconoapp.png',
+        sizes: '192x192',
+        type: 'image/png',
       },
     ],
   };

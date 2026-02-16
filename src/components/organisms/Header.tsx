@@ -3,12 +3,13 @@ import Image from 'next/image';
 import UserAvatar from '@/components/molecules/UserAvatar';
 import Button from '@/components/atoms/Button';
 import Text from '@/components/atoms/Text';
-import { Bell, Calendar, Lock, X, Check, Trash2, History, Sparkles } from 'lucide-react';
+import { Bell, Calendar, Lock, X, Check, Trash2, History, Sparkles, QrCode } from 'lucide-react';
 import { useNotificationStore } from '@/store/notificationStore';
 import { useModal } from '@/hooks/useModal';
 import { format } from 'date-fns';
 import { es } from 'date-fns/locale';
 import UserProfileModal from '@/components/organisms/UserProfileModal';
+import DeveloperCardModal from '@/components/organisms/DeveloperCardModal';
 import { useStoreContext } from '@/hooks/useStoreContext';
 import { Store } from 'lucide-react';
 import ChatbotModal from '@/components/organisms/ChatbotModal';
@@ -36,6 +37,7 @@ const Header: React.FC<HeaderProps> = ({
   const [showNotifications, setShowNotifications] = useState(false);
   const [showProfileModal, setShowProfileModal] = useState(false);
   const [showChatbot, setShowChatbot] = useState(false);
+  const [showDeveloperCard, setShowDeveloperCard] = useState(false);
   const { storeName } = useStoreContext();
   const unread = unreadCount();
 
@@ -89,6 +91,15 @@ const Header: React.FC<HeaderProps> = ({
 
           <div className="flex items-center space-x-2 md:space-x-4">
             {actions && <div>{actions}</div>}
+
+            {/* Developer Contact Card */}
+            <button
+              onClick={() => setShowDeveloperCard(true)}
+              className="p-2 rounded-lg hover:bg-primary/10 transition-colors group relative"
+              title="Mi Tarjeta Digital"
+            >
+              <QrCode className="h-5 w-5 text-muted-foreground group-hover:text-primary transition-colors" />
+            </button>
 
             {/* AURA Chatbot Trigger */}
             <button
@@ -254,6 +265,11 @@ const Header: React.FC<HeaderProps> = ({
       <ChatbotModal
         isOpen={showChatbot}
         onClose={() => setShowChatbot(false)}
+      />
+
+      <DeveloperCardModal
+        isOpen={showDeveloperCard}
+        onClose={() => setShowDeveloperCard(false)}
       />
     </header>
   );
