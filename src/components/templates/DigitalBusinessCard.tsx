@@ -149,32 +149,32 @@ END:VCARD`;
                 </div>
 
                 {/* Main Action Bar (Fixed Dock Optimized) */}
-                <div className="fixed bottom-4 left-1/2 -translate-x-1/2 flex items-center justify-between gap-0 sm:gap-3 p-1 sm:p-2 bg-slate-900/95 backdrop-blur-3xl border border-white/10 rounded-full shadow-[0_20px_50px_rgba(0,0,0,0.5)] z-50 animate-fade-in-up transition-all w-[96%] max-w-md sm:w-auto overflow-hidden">
+                <div className="fixed bottom-6 left-1/2 -translate-x-1/2 flex items-center gap-1 sm:gap-3 p-1.5 sm:p-2 bg-slate-900/95 backdrop-blur-3xl border border-white/10 rounded-full shadow-[0_20px_50px_rgba(0,0,0,0.5)] z-50 animate-fade-in-up transition-all max-w-[98vw] w-max">
                     <button
                         onClick={handleSaveContact}
-                        className="flex items-center gap-1 sm:gap-2 px-2 sm:px-6 py-2 sm:py-3 bg-gradient-to-r from-cyan-600 to-blue-600 hover:from-cyan-500 hover:to-blue-500 text-white rounded-full text-[9px] sm:text-sm font-black uppercase tracking-widest transition-all active:scale-95 whitespace-nowrap shadow-lg shadow-cyan-500/20 shrink-0"
+                        className="flex items-center gap-1.5 px-3 sm:px-5 py-2 sm:py-3 bg-gradient-to-r from-cyan-600 to-blue-600 hover:from-cyan-500 hover:to-blue-500 text-white rounded-full text-[10px] sm:text-sm font-black uppercase tracking-widest transition-all active:scale-95 whitespace-nowrap shadow-lg shadow-cyan-500/20 shrink-0"
                     >
-                        <Download className="w-3 h-3 sm:w-4 sm:h-4 animate-bounce" />
+                        <Download className="w-3.5 h-3.5 sm:w-4 sm:h-4 animate-bounce" />
                         <span>Guardar</span>
                     </button>
 
-                    <div className="w-px h-5 bg-white/10 mx-0.5 sm:mx-2 shrink-0"></div>
+                    <div className="w-px h-5 bg-white/10 mx-0.5 sm:mx-1 shrink-0"></div>
 
-                    <div className="flex items-center justify-between flex-1 sm:flex-none gap-0 sm:gap-2 min-w-0">
-                        <a href="https://wa.me/525660951415" target="_blank" rel="noopener noreferrer" className="p-1 sm:p-3 text-slate-400 hover:text-green-400 hover:bg-green-500/10 rounded-full transition-all active:scale-95 flex items-center justify-center" title="WhatsApp">
-                            <MessageCircle className="w-4 h-4 sm:w-5 sm:h-5" strokeWidth={2} />
+                    <div className="flex items-center gap-1 sm:gap-2 shrink-0">
+                        <a href="https://wa.me/525660951415" target="_blank" rel="noopener noreferrer" className="p-2 sm:p-3 text-slate-400 hover:text-green-400 hover:bg-green-500/10 rounded-full transition-all active:scale-95 flex items-center justify-center" title="WhatsApp">
+                            <MessageCircle className="w-5 h-5 sm:w-5 sm:h-5" strokeWidth={2} />
                         </a>
 
-                        <a href="mailto:cercaniaweb@gmail.com" className="p-1 sm:p-3 text-slate-400 hover:text-white hover:bg-white/10 rounded-full transition-all active:scale-95 flex items-center justify-center" title="Email">
-                            <Mail className="w-4 h-4 sm:w-5 sm:h-5" strokeWidth={2} />
+                        <a href="mailto:cercaniaweb@gmail.com" className="p-2 sm:p-3 text-slate-400 hover:text-white hover:bg-white/10 rounded-full transition-all active:scale-95 flex items-center justify-center" title="Email">
+                            <Mail className="w-5 h-5 sm:w-5 sm:h-5" strokeWidth={2} />
                         </a>
 
-                        <button onClick={handleCopyLink} className="p-1 sm:p-3 text-slate-400 hover:text-white hover:bg-white/10 rounded-full transition-all active:scale-95 flex items-center justify-center" title="Copiar Enlace">
-                            {copied ? <Check className="w-4 h-4 sm:w-5 sm:h-5 text-green-400" /> : <Copy className="w-4 h-4 sm:w-5 sm:h-5" strokeWidth={2} />}
+                        <button onClick={handleCopyLink} className="p-2 sm:p-3 text-slate-400 hover:text-white hover:bg-white/10 rounded-full transition-all active:scale-95 flex items-center justify-center" title="Copiar Enlace">
+                            {copied ? <Check className="w-5 h-5 sm:w-5 sm:h-5 text-green-400" /> : <Copy className="w-5 h-5 sm:w-5 sm:h-5" strokeWidth={2} />}
                         </button>
 
-                        <button onClick={handleShare} className="p-1 sm:p-3 text-slate-400 hover:text-white hover:bg-white/10 rounded-full transition-all active:scale-95 flex items-center justify-center" title="Compartir">
-                            <Share2 className="w-4 h-4 sm:w-5 sm:h-5" strokeWidth={2} />
+                        <button onClick={handleShare} className="p-2 sm:p-3 text-slate-400 hover:text-white hover:bg-white/10 rounded-full transition-all active:scale-95 flex items-center justify-center" title="Compartir">
+                            <Share2 className="w-5 h-5 sm:w-5 sm:h-5" strokeWidth={2} />
                         </button>
                     </div>
                 </div>
