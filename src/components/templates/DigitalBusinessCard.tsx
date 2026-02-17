@@ -2,6 +2,7 @@
 
 import React, { useState } from 'react';
 import { Sparkles, Globe, Monitor, Mail, Phone, Share2, Download, Copy, Check, MessageCircle } from 'lucide-react';
+import AuraIcon from '../atoms/AuraIcon';
 
 const DigitalBusinessCard = () => {
     const [isFlipped, setIsFlipped] = useState(false);
@@ -92,8 +93,14 @@ END:VCARD`;
                                 <div className="absolute inset-0 bg-gradient-to-br from-white/10 to-transparent pointer-events-none" />
                                 <div className="relative h-full p-5 sm:p-10 flex flex-col justify-between z-10">
                                     <div className="flex justify-between items-start">
-                                        <div className="bg-slate-950/80 p-3 sm:p-4 rounded-xl sm:rounded-2xl border border-white/5 shadow-2xl group-hover:scale-110 transition-transform duration-500">
-                                            <Sparkles className="text-cyan-400 w-6 h-6 sm:w-10 sm:h-10 animate-float" />
+                                        <div className="bg-slate-950/80 p-2 sm:p-3 rounded-xl sm:rounded-2xl border border-white/5 shadow-2xl group-hover:scale-110 transition-transform duration-500 flex items-center justify-center">
+                                            {/* Aura Logo with subtle bounce animation */}
+                                            <div className="block sm:hidden">
+                                                <AuraIcon size={24} className="animate-float" showParticles={true} pulsing={true} />
+                                            </div>
+                                            <div className="hidden sm:block">
+                                                <AuraIcon size={40} className="animate-float" showParticles={true} pulsing={true} />
+                                            </div>
                                         </div>
                                         <div className="text-right">
                                             <h3 className="text-lg sm:text-3xl font-black text-white tracking-tighter">CercaniaWeb</h3>
