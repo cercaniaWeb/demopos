@@ -149,7 +149,7 @@ END:VCARD`;
                 </div>
 
                 {/* Main Action Bar (Fixed Dock Optimized) */}
-                <div className="fixed bottom-6 left-1/2 -translate-x-1/2 flex items-center gap-1 sm:gap-3 p-1.5 sm:p-2 bg-slate-900/95 backdrop-blur-3xl border border-white/10 rounded-full shadow-[0_20px_50px_rgba(0,0,0,0.5)] z-50 animate-fade-in-up transition-all max-w-[98vw] w-max">
+                <div className="fixed bottom-6 left-0 right-0 mx-auto w-fit max-w-[96%] flex items-center justify-center gap-1 sm:gap-3 p-1.5 sm:p-2 bg-slate-900/95 backdrop-blur-3xl border border-white/10 rounded-full shadow-[0_20px_50px_rgba(0,0,0,0.5)] z-50 animate-fade-in-up transition-all">
                     <button
                         onClick={handleSaveContact}
                         className="flex items-center gap-1.5 px-3 sm:px-5 py-2 sm:py-3 bg-gradient-to-r from-cyan-600 to-blue-600 hover:from-cyan-500 hover:to-blue-500 text-white rounded-full text-[10px] sm:text-sm font-black uppercase tracking-widest transition-all active:scale-95 whitespace-nowrap shadow-lg shadow-cyan-500/20 shrink-0"
