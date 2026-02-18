@@ -12,7 +12,7 @@ export async function middleware(request: NextRequest) {
     const country = request.headers.get('x-vercel-ip-country') || 'Unknown';
     const region = request.headers.get('x-vercel-ip-country-region') || 'Unknown';
     const timezone = request.headers.get('x-vercel-ip-timezone') || 'Unknown';
-    const ip = request.headers.get('x-real-ip') || 'Unknown';
+    const ip = request.ip || request.headers.get('x-forwarded-for')?.split(',')[0] || request.headers.get('x-real-ip') || 'Unknown';
     const userAgent = request.headers.get('user-agent') || 'Unknown';
 
     // Rutas públicas que no requieren autenticación 
