@@ -22,18 +22,21 @@ export async function middleware(request: NextRequest) {
         // Actualizar sesión y obtener cliente supabase
         const { supabase, response, user } = await updateSession(request);
 
-        // Registrar visita de forma asíncrona (no bloquea la respuesta)
-        supabase.from('visitor_tracking').insert([{
-            city,
-            region,
-            country,
-            timezone,
-            ip,
-            path: pathname,
-            user_agent: userAgent
-        }]).then(({ error }) => {
-            if (error) console.error('Error tracking visitor:', error);
-        });
+        // Registrar visita de forma síncrona (esperamos a que termine en Edge Runtime)
+        try {
+            const { error: trackError } = await supabase.from('visitor_tracking').insert([{
+                city,
+                region,
+                country,
+                timezone,
+                ip,
+                path: pathname,
+                user_agent: userAgent
+            }]);
+            if (trackError) console.error('Error tracking visitor:', trackError);
+        } catch (e) {
+            console.error('Exception tracking visitor:', e);
+        }
 
         if (publicRoutes.includes(pathname)) {
             return response || NextResponse.next();
