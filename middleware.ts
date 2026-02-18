@@ -88,7 +88,7 @@ export async function middleware(request: NextRequest) {
 // Configurar qué rutas pasan por el middleware 
 export const config = {
     matcher: [
-        '/((?!api|_next/static|_next/image|favicon.ico|.*\\..*|login|register|forgot-password|tarjeta).*)',
+        '/((?!api|_next/static|_next/image|favicon.ico|.*\\..*|register|forgot-password|tarjeta).*)',
     ],
 };
 
