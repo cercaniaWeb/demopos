@@ -5,6 +5,7 @@ import { Inter } from 'next/font/google';
 import { ReactNode } from 'react';
 import RootInitializer from '@/components/templates/RootInitializer';
 import NotificationToast from '@/components/notifications/NotificationToast';
+import VisitorTracker from '@/components/VisitorTracker';
 
 const inter = Inter({ subsets: ['latin'] });
 
@@ -31,6 +32,7 @@ export default function RootLayout({
       <body className={inter.className}>
         <RootInitializer>
           <ThemeProvider>
+            <VisitorTracker />
             {children}
             <NotificationToast />
           </ThemeProvider>

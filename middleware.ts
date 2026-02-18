@@ -5,43 +5,14 @@ import { PROTECTED_ROUTES, canAccessRoute, UserRole } from './src/types/roles';
 
 export async function middleware(request: NextRequest) {
     const { pathname } = request.nextUrl;
-
-    // --- Lógica de Rastreo de Visitantes para Estudio de Mercado ---
-    // Capturar datos geográficos de los headers de Vercel
-    const city = request.headers.get('x-vercel-ip-city') || 'Unknown';
-    const country = request.headers.get('x-vercel-ip-country') || 'Unknown';
-    const region = request.headers.get('x-vercel-ip-country-region') || 'Unknown';
-    const timezone = request.headers.get('x-vercel-ip-timezone') || 'Unknown';
-    const ip = request.ip || request.headers.get('x-forwarded-for')?.split(',')[0] || request.headers.get('x-real-ip') || 'Unknown';
-    const userAgent = request.headers.get('user-agent') || 'Unknown';
-
     // Rutas públicas que no requieren autenticación 
     const publicRoutes = ['/login', '/register', '/forgot-password', '/', '/tarjeta'];
-
+    if (publicRoutes.includes(pathname)) {
+        return NextResponse.next();
+    }
     try {
-        // Actualizar sesión y obtener cliente supabase
+        // Actualizar sesión y obtener usuario 
         const { supabase, response, user } = await updateSession(request);
-
-        // Registrar visita de forma síncrona (esperamos a que termine en Edge Runtime)
-        try {
-            const { error: trackError } = await supabase.from('visitor_tracking').insert([{
-                city,
-                region,
-                country,
-                timezone,
-                ip,
-                path: pathname,
-                user_agent: userAgent
-            }]);
-            if (trackError) console.error('Error tracking visitor:', trackError);
-        } catch (e) {
-            console.error('Exception tracking visitor:', e);
-        }
-
-        if (publicRoutes.includes(pathname)) {
-            return response || NextResponse.next();
-        }
-
         if (!user) {
             // No hay sesión, redirigir a login 
             const url = request.nextUrl.clone();
@@ -49,12 +20,12 @@ export async function middleware(request: NextRequest) {
             url.searchParams.set('redirectTo', pathname);
             return NextResponse.redirect(url);
         }
-
         // Obtener rol del usuario desde metadata o DB 
         let userRole: UserRole = 'cajero'; // Default 
         if (user.user_metadata?.role) {
             userRole = user.user_metadata.role as UserRole;
         } else {
+            // Intentar obtener desde la base de datos 
             const { data: userData } = await supabase
                 .from('users')
                 .select('role')
@@ -64,10 +35,10 @@ export async function middleware(request: NextRequest) {
                 userRole = userData.role as UserRole;
             }
         }
-
         // Verificar si el usuario puede acceder a esta ruta 
         const hasAccess = canAccessRoute(userRole, pathname);
         if (!hasAccess) {
+            // Redirigir a página apropiada según el rol 
             const url = request.nextUrl.clone();
             if (userRole === 'cajero') {
                 url.pathname = '/pos';
@@ -78,10 +49,11 @@ export async function middleware(request: NextRequest) {
             }
             return NextResponse.redirect(url);
         }
-
+        // Usuario tiene acceso, continuar con la respuesta actualizada (cookies) 
         return response;
     } catch (error) {
         console.error('Middleware error:', error);
+        // En caso de error, redirigir a login 
         const url = request.nextUrl.clone();
         url.pathname = '/login';
         return NextResponse.redirect(url);
@@ -91,7 +63,14 @@ export async function middleware(request: NextRequest) {
 // Configurar qué rutas pasan por el middleware 
 export const config = {
     matcher: [
-        '/((?!api|_next/static|_next/image|favicon.ico|.*\\..*|register|forgot-password|tarjeta).*)',
+        /* 
+         * Match all request paths except for the ones starting with: 
+         * - api (API routes) 
+         * - _next/static (static files) 
+         * - _next/image (image optimization files) 
+         * - favicon.ico (favicon file) 
+         * - public folder 
+         */
+        '/((?!api|_next/static|_next/image|favicon.ico|.*\\..*|login|register|forgot-password|tarjeta).*)',
     ],
 };
-
